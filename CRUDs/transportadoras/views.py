@@ -1,3 +1,9 @@
 from django.shortcuts import render
+from rest_framework import viewsets
+from .models import Transportadoras
+from .serializers import TransportadorasSerializer
 
-# Create your views here.
+
+class TransportadorasViewSet(viewsets.ModelViewSet):
+    queryset = Transportadoras.objects.all()
+    serializer_class = TransportadorasSerializer

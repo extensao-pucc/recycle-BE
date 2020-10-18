@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class QualidadesConfig(AppConfig):
-    name = 'qualidades'
+    name = 'CRUDs.qualidades'

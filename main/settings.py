@@ -40,6 +40,16 @@ INSTALLED_APPS = [
     'rest_framework',
     'CRUDs.condicoesDePagamento.apps.CondicoesDePagamentoConfig',
     'CRUDs.familias.apps.FamiliasConfig',
+    'CRUDs.fornecedores.apps.FornecedoresConfig',
+    # 'CRUDs.motivosDeParada.apps.MotivosDeParadaConfig',
+    # 'CRUDs.naturezaDasOperacoes.apps.NaturezaDasOperacoesConfig',
+    # 'CRUDs.parametros.apps.ParametrosConfig',
+    # 'CRUDs.prensas.apps.PrensasConfig',
+    # 'CRUDs.produtos.apps.ProdutosConfig',
+    # 'CRUDs.qualidades.apps.QualidadesConfig',
+    # 'CRUDs.socios.apps.SociosConfig',
+    # 'CRUDs.transportadoras.apps.TransportadorasConfig',
+    # 'CRUDs.unidadesDeMedida.apps.UnidadesDeMedidaConfig',
 ]
 
 MIDDLEWARE = [

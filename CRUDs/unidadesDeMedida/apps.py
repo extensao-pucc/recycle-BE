@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class UnidadesdemedidaConfig(AppConfig):
-    name = 'unidadesDeMedida'
+class UnidadesDeMedidaConfig(AppConfig):
+    name = 'CRUDs.unidadesDeMedida'
