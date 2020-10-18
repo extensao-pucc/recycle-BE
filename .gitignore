@@ -1,0 +1,21 @@
+# Byte-compiled / optimized / DLL files
+*__pycache__*
+*.pyc
+
+# folders
+venv/
+media/
+
+# idea
+.idea/
+
+# vs code
+.vccode/
+**/.vscode/
+
+# migrations
+*migrations*
+./migrations
+.migrations/
+/migrations
+**/.migrations/
