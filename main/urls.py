@@ -11,7 +11,7 @@ from CRUDs.parametros.views import ParametrosViewSet
 from CRUDs.prensas.views import PrensasViewSet
 from CRUDs.produtos.views import ProdutosViewSet
 from CRUDs.qualidades.views import QualidadesViewSet
-# from CRUDs.socios.views import SociosViewSet
+from CRUDs.socios.views import SociosViewSet
 from CRUDs.transportadoras.views import TransportadorasViewSet
 from CRUDs.unidadesDeMedida.views import UnidadesDeMedidaViewSet
 
@@ -25,7 +25,7 @@ router.register(r'parametros', ParametrosViewSet)
 router.register(r'prensas', PrensasViewSet)
 router.register(r'produtos', ProdutosViewSet)
 router.register(r'qualidades', QualidadesViewSet)
-# router.register(r'socios', SociosViewSet)
+router.register(r'socios', SociosViewSet)
 router.register(r'transportadoras', TransportadorasViewSet)
 router.register(r'unidadesDeMedida', UnidadesDeMedidaViewSet)
 
