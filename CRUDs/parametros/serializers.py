@@ -1,8 +1,8 @@
 from rest_framework import serializers
-from .models import CondicoesDePagamento
+from .models import Parametros
 
 # Serializers define the API representation.
-class CondicoesDePagamentoSerializer(serializers.HyperlinkedModelSerializer):
+class ParametrosSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = CondicoesDePagamento
-        fields = ['id','descricao']
+        model = Parametros
+        fields = ['id','triagem', 'prensa', 'remanufatura', 'numero_proxima_NFE', 'numero_proxima_NFS']

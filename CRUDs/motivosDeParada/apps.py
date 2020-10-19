@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class MotivosdeparadaConfig(AppConfig):
+class MotivosDeParadaConfig(AppConfig):
     name = 'CRUDs.motivosDeParada'
