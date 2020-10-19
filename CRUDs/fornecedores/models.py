@@ -33,7 +33,7 @@ class Fornecedores(models.Model):
     ]
 
     id = models.AutoField(primary_key=True)
-    CNPJ_CPF = models.CharField(verbose_name='CNPJ/CPF', max_length=17, unique=True, blank=False)
+    CNPJ_CPF = models.CharField(verbose_name='CNPJ/CPF', max_length=18, unique=True, blank=False)
     razao_social_nome = models.CharField(verbose_name='Razão Social/Nome', max_length=100)
     IE = models.CharField(verbose_name='IE', max_length=9)
     endereco = models.CharField(verbose_name='Endereço', max_length=100)

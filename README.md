@@ -1,6 +1,6 @@
 <h1 align="center">
 <br>
-Cooperlinia
+Recycle
 </h1>
 
 <p align="center">Projeto de extensão em python</p>
