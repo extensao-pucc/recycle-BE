@@ -4,7 +4,7 @@
 
 # folders
 venv/
-
+media/
 
 # idea
 .idea/
@@ -14,7 +14,7 @@ venv/
 **/.vscode/
 
 # migrations
-
+*migrations*
 ./migrations
 .migrations/
 /migrations
