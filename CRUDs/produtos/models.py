@@ -22,5 +22,9 @@ class Produtos(models.Model):
     preco_compra = models.CharField(verbose_name='Preço de Compra', max_length=100)
     preco_venda = models.CharField(verbose_name='Preço de Venda', max_length=100)
 
+    
+    def __str__(self):
+        return self.descricao
+    
     class Meta:
         verbose_name_plural = "Produtos"

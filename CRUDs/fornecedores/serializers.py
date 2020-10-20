@@ -6,4 +6,4 @@ class FornecedoresSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Fornecedores
         fields = ['id','CNPJ_CPF','razao_social_nome','IE','endereco','numero',
-            'complemento','bairro','CEP','UF','cidade','fone','email']
+            'complemento','bairro','CEP','UF','cidade','telefone','email']
