@@ -6,4 +6,4 @@ class TransportadorasSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Transportadoras
         fields = ['id','CNPJ_CPF', 'razao_social_nome', 'IE', 'endereco', 'numero', 'complemento', 
-        'bairro', 'CEP', 'UF', 'cidade', 'fone', 'email']
+        'bairro', 'CEP', 'UF', 'cidade', 'telefone', 'email']

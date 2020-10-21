@@ -33,8 +33,8 @@ class Transportadoras(models.Model):
     ]
 
     id = models.AutoField(primary_key=True)
-    CNPJ_CPF = models.CharField(verbose_name='CNPJ/CPF', max_length=18, unique=True, blank=False)
-    razao_social_nome = models.CharField(verbose_name='Razão Social/Nome', max_length=100)
+    CNPJ_CPF = models.CharField(verbose_name='CNPJ ou CPF', max_length=18, unique=True, blank=False)
+    razao_social_nome = models.CharField(verbose_name='Razão social ou Nome', max_length=100)
     IE = models.CharField(verbose_name='IE', max_length=100)
     endereco = models.CharField(verbose_name='Endereço', max_length=100)
     numero = models.IntegerField(verbose_name='Numero')
@@ -43,11 +43,11 @@ class Transportadoras(models.Model):
     CEP = models.CharField(verbose_name='CEP', max_length=100)
     UF = models.CharField(verbose_name='UF', blank=False, max_length=10, choices=estados)
     cidade = models.CharField(verbose_name='Cidade', max_length=100)
-    fone = models.CharField(verbose_name='Fone', max_length=100)
+    telefone = models.CharField(verbose_name='Telefone', max_length=16)
     email = models.CharField(verbose_name='Email', max_length=100)
 
     def __str__(self):
-        return self.razao_social_nome
+        return self.razao_social_nome + ' - ' + self.CNPJ_CPF
 
     class Meta:
         verbose_name_plural = "Transportadoras"
