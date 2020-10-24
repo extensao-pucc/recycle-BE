@@ -52,6 +52,9 @@ INSTALLED_APPS = [
     'CRUDs.socios.apps.SociosConfig',
     'CRUDs.transportadoras.apps.TransportadorasConfig',
     'CRUDs.unidadesDeMedida.apps.UnidadesDeMedidaConfig',
+    'CRUDs.lote.apps.LoteConfig',
+    'CRUDs.loteItens.apps.LoteItensConfig',
+    'CRUDs.loteParadas.apps.LoteParadasConfig',
 ]
 
 MIDDLEWARE = [
