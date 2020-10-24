@@ -26,7 +26,8 @@ Recycle
 - Run `virtualenv venv`
 - Go to `cd venv`
 - Go to `cd Scripts`
-- Run `. activate` for windows SO
+- Run `. activate` for windows OS
+- Run `. venv/bin/activate` for Mac OS
 - Go to `cd ..`
 - Go to `cd ..`
 - Run `pip install -r requirements.txt`
