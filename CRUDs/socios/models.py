@@ -65,6 +65,7 @@ class Socios(models.Model):
     data_de_demissao = models.DateField(verbose_name='Data de demissão', blank=True, null=True)
     situacao = models.CharField(verbose_name='Situação', blank=False, max_length=10, choices=status)
     foto = models.ImageField(upload_to='post_img/%Y/%m/%d', blank=True, null=True, verbose_name='Foto')
+    perfil = models.IntegerField(verbose_name='Perfil', blank=False)
     
     def __str__(self):
         return self.nome
