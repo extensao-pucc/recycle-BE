@@ -4,42 +4,6 @@ from django.conf import settings
 import os
 
 class Socios(models.Model):
-    estados = [
-        ('AC', 'Acre'),
-        ('AL', 'Alagoas'),
-        ('AP', 'Amapá'),
-        ('AM', 'Amazonas'),
-        ('BA', 'Bahia'),
-        ('CE', 'Ceará'),
-        ('DF', 'Distrito Federal'),
-        ('ES', 'Espírito Santo'),
-        ('GO', 'Goiás'),
-        ('MA', 'Maranhão'),
-        ('MT', 'Mato Grosso'),
-        ('MS', 'Mato Grosso do Sul'),
-        ('MG', 'Minas Gerais'),
-        ('PA', 'Pará'),
-        ('PB', 'Paraíba'),
-        ('PR', 'Paraná'),
-        ('PE', 'Pernambuco'),
-        ('PI', 'Piauí'),
-        ('RJ', 'Rio de Janeiro'),
-        ('RN', 'Rio Grande do Norte'),
-        ('RS', 'Rio Grande do Sul'),
-        ('RO', 'Rondônia'),
-        ('RR', 'Roraima'),
-        ('SC', 'Santa Catarina'),
-        ('SP', 'São Paulo'),
-        ('SE', 'Sergipe'),
-        ('TO', 'Tocantins'),
-    ]
-    
-    status = [
-        ('Ativo', 'Ativo'),
-        ('Inativo', 'Inativo'),
-    ]
-
-
     id = models.AutoField(primary_key=True)
     matricula = models.IntegerField(verbose_name='Matrícula', unique=True, blank=False)
     nome = models.CharField(verbose_name='Nome', max_length=100, blank=False)
@@ -57,15 +21,15 @@ class Socios(models.Model):
     endereco = models.CharField(verbose_name='Endereço', max_length=100, blank=False)
     numero = models.IntegerField(verbose_name='Numero', blank=False)
     complemento = models.CharField(verbose_name='Complemento', max_length=100, blank=True)
-    UF = models.CharField(verbose_name='UF', blank=False, max_length=10, choices=estados)
+    UF = models.CharField(verbose_name='UF', blank=False, max_length=2)
     cidade = models.CharField(verbose_name='Cidade', max_length=100)
     telefone = models.CharField(verbose_name='Telefone', max_length=100, blank=False)
     email = models.CharField(verbose_name='Email', max_length=100, blank=False)
     data_de_admissao = models.DateField(verbose_name='Data de admissão', auto_now_add=True, blank=False)
     data_de_demissao = models.DateField(verbose_name='Data de demissão', blank=True, null=True)
-    situacao = models.CharField(verbose_name='Situação', blank=False, max_length=10, choices=status)
+    situacao = models.CharField(verbose_name='Situação', blank=False, max_length=10)
     foto = models.ImageField(upload_to='post_img/%Y/%m/%d', blank=True, null=True, verbose_name='Foto')
-    perfil = models.IntegerField(verbose_name='Perfil', blank=False)
+    perfil = models.CharField(verbose_name='Perfil', blank=False, max_length=20)
     
     def __str__(self):
         return self.nome
