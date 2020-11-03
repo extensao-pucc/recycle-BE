@@ -7,13 +7,18 @@ from CRUDs.unidadesDeMedida.serializers import UnidadesDeMedidaSerializer
 from CRUDs.naturezaDasOperacoes.serializers import NaturezaDasOperacoesSerializer
 
 # Serializers define the API representation.
-class ProdutosSerializer(serializers.HyperlinkedModelSerializer):
-    familia = FamiliasSerializer(many=False)
-    fornecedor = FornecedoresSerializer(many=False)
-    qualidade = QualidadesSerializer(many=False)
-    unidade_de_medida = UnidadesDeMedidaSerializer(many=False)
-    CFOPE = NaturezaDasOperacoesSerializer(many=False)
-    CFOPS = NaturezaDasOperacoesSerializer(many=False)
+class ProdutosSerializer(serializers.ModelSerializer):
     class Meta:
         model = Produtos
         fields = ['id','codigo', 'descricao', 'familia', 'fornecedor', 'qualidade', 'unidade_de_medida', 'NCM', 'CSTE', 'CSTS', 'CFOPE', 'CFOPS', 'preco_compra', 'preco_venda']
+        read_only_fields = ('created','updated')
+
+    def to_representation(self, instance):
+        response = super().to_representation(instance)
+        response['familia'] = FamiliasSerializer(instance.familia).data
+        response['fornecedor'] = FornecedoresSerializer(instance.fornecedor).data
+        response['qualidade'] = QualidadesSerializer(instance.qualidade).data
+        response['unidade_de_medida'] = UnidadesDeMedidaSerializer(instance.unidade_de_medida).data
+        response['CFOPE'] = NaturezaDasOperacoesSerializer(instance.CFOPE).data
+        response['CFOPS'] = NaturezaDasOperacoesSerializer(instance.CFOPS).data
+        return response
