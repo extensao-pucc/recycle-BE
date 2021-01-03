@@ -11,7 +11,11 @@ class LoteItens(models.Model):
     produto = models.ForeignKey(Produtos, on_delete=models.DO_NOTHING, verbose_name='Produtos')
     quantidade = models.IntegerField(verbose_name='Quantidade')
     socio = models.ForeignKey(Socios, on_delete=models.DO_NOTHING, verbose_name='Socios')
-    tempo = models.IntegerField(verbose_name='Tempo')
+    data_iniciado = models.DateField(verbose_name='Data Iniciado', blank=False)
+    data_finalizado = models.DateField(verbose_name='Data Finalizado', blank=False)
+    hora_iniciado = models.TimeField(verbose_name='Hora Iniciado', blank=False)
+    hora_finalizado = models.TimeField(verbose_name='Hora Finalizado', blank=False)
+    tempo_total = models.TimeField(verbose_name='Tempo Total', blank=False)
 
     def __str__(self):
         return self.num_lote

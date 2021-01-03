@@ -41,8 +41,13 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'CRUDs.condicoesDePagamento.apps.CondicoesDePagamentoConfig',
+    'CRUDs.estoque.apps.EstoqueConfig',
     'CRUDs.familias.apps.FamiliasConfig',
     'CRUDs.fornecedores.apps.FornecedoresConfig',
+    'CRUDs.lote.apps.LoteConfig',
+    'CRUDs.loteItens.apps.LoteItensConfig',
+    'CRUDs.loteParadas.apps.LoteParadasConfig',
+    'CRUDs.materiasPrimas.apps.MateriasPrimasConfig',
     'CRUDs.motivosDeParada.apps.MotivosDeParadaConfig',
     'CRUDs.naturezaDasOperacoes.apps.NaturezaDasOperacoesConfig',
     'CRUDs.parametros.apps.ParametrosConfig',
@@ -52,9 +57,6 @@ INSTALLED_APPS = [
     'CRUDs.socios.apps.SociosConfig',
     'CRUDs.transportadoras.apps.TransportadorasConfig',
     'CRUDs.unidadesDeMedida.apps.UnidadesDeMedidaConfig',
-    'CRUDs.lote.apps.LoteConfig',
-    'CRUDs.loteItens.apps.LoteItensConfig',
-    'CRUDs.loteParadas.apps.LoteParadasConfig',
 ]
 
 MIDDLEWARE = [
