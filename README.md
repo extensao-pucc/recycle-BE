@@ -12,8 +12,8 @@ Recycle
 
 
 ## DB Setup
-- Download and install MySQL (https://www.mysql.com/downloads/)
-- Download and install XAMPP (https://dev.mysql.com/downloads/workbench/)
+- Download and install MySQL (https://dev.mysql.com/downloads/workbench/)
+- Download and install XAMPP (https://xampp.br.uptodown.com/windows/download)
 - Open Xampp
 - Start MySQL option
 
