@@ -24,12 +24,7 @@ Recycle
 - Run `python -m pip install pip`
 - Run `pip install virtualenv`
 - Run `virtualenv venv`
-- Go to `cd venv`
-- Go to `cd Scripts`
-- Run `. activate` for windows OS
-- Run `. venv/bin/activate` for Mac OS
-- Go to `cd ..`
-- Go to `cd ..`
+- Run `. venv/bin/activate`
 - Run `pip install -r requirements.txt`
 - Run `python manage.py makemigrations`
 - Run `python manage.py migrate`

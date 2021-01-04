@@ -14,4 +14,4 @@ media/
 **/.vscode/
 
 # migrations
-*migrations* 
+*inicial.py

@@ -30,10 +30,10 @@ class Socios(models.Model):
     situacao = models.CharField(verbose_name='Situação', blank=False, max_length=10)
     foto = models.ImageField(upload_to='post_img/%Y/%m/%d', blank=True, null=True, verbose_name='Foto')
     perfil = models.CharField(verbose_name='Perfil', blank=False, max_length=20)
+    senha = models.CharField(verbose_name='Senha', blank=False, max_length=14)
     
     def __str__(self):
         return self.nome
-
     class Meta:
         verbose_name_plural = "Sócios"
 
