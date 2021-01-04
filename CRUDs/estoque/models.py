@@ -8,7 +8,7 @@ class Estoque(models.Model):
     produto = models.ForeignKey(Produtos, on_delete=models.DO_NOTHING, verbose_name='Produtos', related_name="produto")
     fornecedor = models.ForeignKey(Fornecedores, on_delete=models.DO_NOTHING, verbose_name='Fornecedores', related_name="fornecedor")
     qualidade = models.ForeignKey(Qualidades, on_delete=models.DO_NOTHING, verbose_name='Qualidades', related_name="qualidade")
-    quantidade = models.CharField(verbose_name='Descrição', max_length=100, unique=True)
+    quantidade = models.CharField(verbose_name='Quantidade', max_length=100, unique=True)
 
 
     def __str__(self):

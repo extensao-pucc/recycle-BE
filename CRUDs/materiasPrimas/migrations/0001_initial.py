@@ -12,15 +12,13 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Prensas',
+            name='MateriasPrimas',
             fields=[
                 ('id', models.AutoField(primary_key=True, serialize=False)),
-                ('numero', models.IntegerField(unique=True, verbose_name='Numero')),
-                ('descricao', models.CharField(max_length=100, verbose_name='Descrição')),
-                ('detalhes_tecnicos', models.CharField(max_length=100, verbose_name='Detalhes Técnicos')),
+                ('nome', models.CharField(max_length=100, unique=True, verbose_name='Nome')),
             ],
             options={
-                'verbose_name_plural': 'Prensas',
+                'verbose_name_plural': 'Materias Primas',
             },
         ),
     ]
