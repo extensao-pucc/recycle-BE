@@ -20,7 +20,7 @@ from CRUDs.socios.views import SociosViewSet
 from CRUDs.transportadoras.views import TransportadorasViewSet
 from CRUDs.unidadesDeMedida.views import UnidadesDeMedidaViewSet
 from CRUDs.valores.views import ValoresViewSet
-from utils import login
+from utils.authentication import SigninViewSet
 
 from django.conf.urls.static import static
 from django.conf import settings
@@ -45,12 +45,12 @@ router.register(r'transportadoras', TransportadorasViewSet)
 router.register(r'unidadesDeMedida', UnidadesDeMedidaViewSet)
 router.register(r'valores', ValoresViewSet)
 
-router.register(r'login', login.person, basename='login')
 
 urlpatterns = [
     path('', include(router.urls)),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
+    path('login/', SigninViewSet.as_view({'post':'signin'}))
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
