@@ -20,6 +20,7 @@ from CRUDs.socios.views import SociosViewSet
 from CRUDs.transportadoras.views import TransportadorasViewSet
 from CRUDs.unidadesDeMedida.views import UnidadesDeMedidaViewSet
 from CRUDs.valores.views import ValoresViewSet
+from utils import login
 
 from django.conf.urls.static import static
 from django.conf import settings
@@ -43,6 +44,8 @@ router.register(r'socios', SociosViewSet)
 router.register(r'transportadoras', TransportadorasViewSet)
 router.register(r'unidadesDeMedida', UnidadesDeMedidaViewSet)
 router.register(r'valores', ValoresViewSet)
+
+router.register(r'login', login.person, basename='login')
 
 urlpatterns = [
     path('', include(router.urls)),
