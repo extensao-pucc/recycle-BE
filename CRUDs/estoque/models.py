@@ -5,8 +5,8 @@ from CRUDs.qualidades.models import Qualidades
 
 class Estoque(models.Model):
     id = models.AutoField(primary_key=True)
-    produto = models.ForeignKey(Produtos, on_delete=models.DO_NOTHING, verbose_name='Produtos', related_name="produto")
     fornecedor = models.ForeignKey(Fornecedores, on_delete=models.DO_NOTHING, verbose_name='Fornecedores', related_name="fornecedor")
+    produto = models.ForeignKey(Produtos, on_delete=models.DO_NOTHING, verbose_name='Produtos', related_name="produto")
     qualidade = models.ForeignKey(Qualidades, on_delete=models.DO_NOTHING, verbose_name='Qualidades', related_name="qualidade")
     quantidade = models.CharField(verbose_name='Quantidade', max_length=100, unique=True)
 
