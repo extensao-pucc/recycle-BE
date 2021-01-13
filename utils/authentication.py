@@ -24,6 +24,7 @@ class SigninViewSet(viewsets.ViewSet):
         except Socios.DoesNotExist:
             return Response("Usuário ou senha incorretos")
        
+
 class ForgetPasswordViewSet(viewsets.ViewSet):
 
     @action(detail=True, methods=['post'])
@@ -34,10 +35,14 @@ class ForgetPasswordViewSet(viewsets.ViewSet):
 
             if person.senha != request.data['old_password']:
                 return Response("Senha atual incorreta.")
-            
-            person.senha = SociosSerializer.
-            return Response(person)
 
+            if person.senha == request.data['new_password']:
+                return Response("Altere para uma senha diferente da atual")
+            
+            person.senha = request.data['new_password']
+            person.save()
+
+            return Response(status=200)
 
         except Socios.DoesNotExist:
             return Response("Usuário não existe")
