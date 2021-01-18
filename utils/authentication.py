@@ -17,12 +17,18 @@ class SigninViewSet(viewsets.ViewSet):
             person = SociosSerializer(person)
             return Response({
                 'token': uuid.uuid4(),
-                'person': person.data
-                
+                'person': {
+                    'matricula': person.data['matricula'], 
+                    'nome': person.data['nome'],
+                    'perfil': person.data['perfil'],
+                    'foto': person.data['foto']},
+                'mssg': 'Usuario encontrado',               
             })
 
         except Socios.DoesNotExist:
-            return Response("Usuário ou senha incorretos")
+            return Response({
+                'mssg': "Usuário ou senha incorretos",
+            })
        
 
 class ForgetPasswordViewSet(viewsets.ViewSet):
