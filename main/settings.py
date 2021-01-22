@@ -57,7 +57,6 @@ INSTALLED_APPS = [
     'CRUDs.socios.apps.SociosConfig',
     'CRUDs.transportadoras.apps.TransportadorasConfig',
     'CRUDs.unidadesDeMedida.apps.UnidadesDeMedidaConfig',
-    'CRUDs.valores.apps.ValoresConfig',
 ]
 
 MIDDLEWARE = [
