@@ -3,6 +3,7 @@ from .models import Socios
 
 # Serializers define the API representation.
 class SociosSerializer(serializers.HyperlinkedModelSerializer):
+    # data_de_admissao = serializers.DateField(format="%d-%m-%Y", input_formats=['%d-%m-%Y', 'iso-8601'])
     class Meta:
         model = Socios
         fields = ['id','matricula', 'nome', 'data_de_nascimento', 'RG', 'data_emissao', 'local_emissao', 

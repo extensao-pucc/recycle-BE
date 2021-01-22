@@ -19,7 +19,6 @@ from CRUDs.qualidades.views import QualidadesViewSet
 from CRUDs.socios.views import SociosViewSet
 from CRUDs.transportadoras.views import TransportadorasViewSet
 from CRUDs.unidadesDeMedida.views import UnidadesDeMedidaViewSet
-from CRUDs.valores.views import ValoresViewSet
 from utils.authentication import SigninViewSet
 from utils.authentication import ForgetPasswordViewSet
 
@@ -44,7 +43,6 @@ router.register(r'qualidades', QualidadesViewSet)
 router.register(r'socios', SociosViewSet)
 router.register(r'transportadoras', TransportadorasViewSet)
 router.register(r'unidadesDeMedida', UnidadesDeMedidaViewSet)
-router.register(r'valores', ValoresViewSet)
 
 
 urlpatterns = [
