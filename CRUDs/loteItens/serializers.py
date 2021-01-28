@@ -5,4 +5,4 @@ from .models import LoteItens
 class LoteItensSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = LoteItens
-        fields = ['id','num_lote', 'num_recipiente', 'produto', 'quantidade', 'socio', 'tempo']
+        fields = ['id','num_lote', 'num_recipiente', 'produto', 'quantidade', 'socio', 'iniciado', 'finalizado', 'tempo_total']
