@@ -3,11 +3,11 @@ from .models import Lote
 
 
 class LoteAdmin(admin.ModelAdmin):
-    list_display = ('id','num_lote', 'data_iniciado', 'data_finalizado', 'hora_iniciado', 'hora_finalizado', 'tempo_total', 'socio', 'fornecedor', 'observacao')
-    list_display_links = ('id','num_lote', 'data_iniciado', 'data_finalizado', 'hora_iniciado', 'hora_finalizado', 'tempo_total', 'socio', 'fornecedor', 'observacao')
-    list_filter = ('id','num_lote', 'data_iniciado', 'data_finalizado', 'hora_iniciado', 'hora_finalizado', 'tempo_total', 'socio', 'fornecedor', 'observacao')
+    list_display = ('id','num_lote', 'iniciado', 'finalizado', 'tempo_total', 'socio', 'fornecedor', 'observacao')
+    list_display_links = ('id','num_lote', 'iniciado', 'finalizado', 'tempo_total', 'socio', 'fornecedor', 'observacao')
+    list_filter = ('id','num_lote', 'iniciado', 'finalizado', 'tempo_total', 'socio', 'fornecedor', 'observacao')
     list_per_page = 10
-    search_fields = ('id','num_lote', 'data_iniciado', 'data_finalizado', 'hora_iniciado', 'hora_finalizado', 'tempo_total', 'socio', 'fornecedor', 'observacao')
+    search_fields = ('id','num_lote', 'iniciado', 'finalizado', 'tempo_total', 'socio', 'fornecedor', 'observacao')
 
 
 admin.site.register(Lote, LoteAdmin)

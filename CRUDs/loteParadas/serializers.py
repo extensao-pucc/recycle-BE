@@ -5,4 +5,4 @@ from .models import LoteParadas
 class LoteParadasSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = LoteParadas
-        fields = ['id','num_lote', 'motivo', 'sequencia', 'tempo']
+        fields = ['id','num_lote', 'motivo', 'sequencia', 'iniciado', 'finalizado', 'tempo_total']
