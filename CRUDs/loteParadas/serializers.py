@@ -14,4 +14,4 @@ class LoteParadasSerializer(serializers.ModelSerializer):
         response['num_lote'] = LoteSerializer(instance.num_lote).data
         response['motivo'] = MotivosDeParadaSerializer(instance.motivo).data
         
-        return response
+        return response 
