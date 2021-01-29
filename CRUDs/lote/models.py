@@ -14,7 +14,7 @@ class Lote(models.Model):
     tempo_total = models.IntegerField(verbose_name='Tempo Total', blank=False)
 
     def __str__(self):
-        return self.num_lote
+        return str(self.num_lote)
 
     class Meta:
         verbose_name_plural = "Lote"
