@@ -4,11 +4,10 @@ from CRUDs.fornecedores.models import Fornecedores
 
 
 class Lote(models.Model):
-    id = models.AutoField(primary_key=True)
+    num_lote = models.IntegerField(verbose_name='Numero do Lote', primary_key=True)
     finalizado = models.DateTimeField(verbose_name='Finalizado', blank=False)
     fornecedor = models.ForeignKey(Fornecedores, on_delete=models.DO_NOTHING, verbose_name='Fornecedores')
     iniciado = models.DateTimeField(verbose_name='Iniciado', blank=False)
-    num_lote = models.IntegerField(verbose_name='Numero do Lote', unique=True)
     observacao = models.CharField(verbose_name='Observação', max_length=200)
     socio = models.ForeignKey(Socios, on_delete=models.DO_NOTHING, verbose_name='Socios')
     tempo_total = models.IntegerField(verbose_name='Tempo Total', blank=False)

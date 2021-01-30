@@ -8,7 +8,7 @@ from CRUDs.socios.serializers import SociosSerializer
 class LoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lote
-        fields = ['id','num_lote', 'iniciado', 'finalizado', 'tempo_total', 'socio', 'fornecedor', 'observacao']
+        fields = ['num_lote', 'iniciado', 'finalizado', 'tempo_total', 'socio', 'fornecedor', 'observacao']
         read_only_fields = ('created','updated')
 
     def to_representation(self, instance):
