@@ -3,7 +3,6 @@ from CRUDs.socios.models import Socios
 from CRUDs.produtos.models import Produtos
 from CRUDs.lote.models import Lote
 
-
 class LoteItens(models.Model):
     id = models.AutoField(primary_key=True)
     finalizado = models.DateTimeField(verbose_name='Finalizado', blank=False)
@@ -16,7 +15,7 @@ class LoteItens(models.Model):
     tempo_total = models.IntegerField(verbose_name='Tempo Total', blank=False)
 
     def __str__(self):
-        return self.num_lote
+        return self.num_lote.num_lote
 
     class Meta:
         verbose_name_plural = "Itens do Lote"
