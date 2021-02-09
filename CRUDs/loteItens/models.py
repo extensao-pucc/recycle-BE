@@ -10,7 +10,7 @@ class LoteItens(models.Model):
     num_lote = models.ForeignKey(Lote, on_delete=models.DO_NOTHING, verbose_name='Lote')
     num_recipiente = models.IntegerField(verbose_name='Numero do Recipiente')
     produto = models.ForeignKey(Produtos, on_delete=models.DO_NOTHING, verbose_name='Produtos')
-    quantidade = models.IntegerField(verbose_name='Quantidade')
+    quantidade = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Quantidade')
     socio = models.ForeignKey(Socios, on_delete=models.DO_NOTHING, verbose_name='Socios')
     tempo_total = models.IntegerField(verbose_name='Tempo Total', blank=False)
 
