@@ -11,6 +11,7 @@ from CRUDs.loteItens.views import LoteItensViewSet
 from CRUDs.loteParadas.views import LoteParadasViewSet
 from CRUDs.materiasPrimas.views import MateriasPrimasViewSet
 from CRUDs.motivosDeParada.views import MotivosDeParadaViewSet
+from CRUDs.movimentacoes.views import MovimentacoesViewSet
 from CRUDs.naturezaDasOperacoes.views import NaturezaDasOperacoesViewSet
 from CRUDs.parametros.views import ParametrosViewSet
 from CRUDs.prensas.views import PrensasViewSet
@@ -35,6 +36,7 @@ router.register(r'loteItens', LoteItensViewSet)
 router.register(r'loteParadas', LoteParadasViewSet)
 router.register(r'materiasPrimas', MateriasPrimasViewSet)
 router.register(r'motivosDeParada', MotivosDeParadaViewSet)
+router.register(r'movimentacoes', MovimentacoesViewSet)
 router.register(r'naturezaDasOperacoes', NaturezaDasOperacoesViewSet)
 router.register(r'parametros', ParametrosViewSet)
 router.register(r'prensas', PrensasViewSet)

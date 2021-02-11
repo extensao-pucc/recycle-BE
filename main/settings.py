@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'CRUDs.loteParadas.apps.LoteParadasConfig',
     'CRUDs.materiasPrimas.apps.MateriasPrimasConfig',
     'CRUDs.motivosDeParada.apps.MotivosDeParadaConfig',
+    'CRUDs.movimentacoes.apps.MovimentacoesConfig',
     'CRUDs.naturezaDasOperacoes.apps.NaturezaDasOperacoesConfig',
     'CRUDs.parametros.apps.ParametrosConfig',
     'CRUDs.prensas.apps.PrensasConfig',
