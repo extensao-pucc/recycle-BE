@@ -10,7 +10,7 @@ from CRUDs.qualidades.serializers import QualidadesSerializer
 class ProdutosSerializer(serializers.ModelSerializer):
     class Meta:
         model = Produtos
-        fields = ['id','codigo', 'descricao', 'familia', 'fornecedor', 'preco_compra', 'preco_venda', 'qualidade', 'unidade_de_medida', 'NCM', 'CSTE', 'CSTS', 'CFOPE', 'CFOPS']
+        fields = ['id','codigo', 'descricao', 'familia', 'fornecedor', 'preco_compra', 'preco_venda', 'quantidade', 'qualidade', 'unidade_de_medida', 'NCM', 'CSTE', 'CSTS', 'CFOPE', 'CFOPS']
         read_only_fields = ('created','updated')
 
     def to_representation(self, instance):

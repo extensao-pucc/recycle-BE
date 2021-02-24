@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'CRUDs.condicoesDePagamento.apps.CondicoesDePagamentoConfig',
-    'CRUDs.estoque.apps.EstoqueConfig',
     'CRUDs.familias.apps.FamiliasConfig',
     'CRUDs.fornecedores.apps.FornecedoresConfig',
     'CRUDs.lote.apps.LoteConfig',
