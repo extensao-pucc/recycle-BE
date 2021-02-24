@@ -3,7 +3,6 @@ from django.urls import path, include
 from rest_framework import routers
 
 from CRUDs.condicoesDePagamento.views import CondicoesDePagamentoViewSet
-from CRUDs.estoque.views import EstoqueViewSet
 from CRUDs.familias.views import FamiliasViewSet
 from CRUDs.fornecedores.views import FornecedoresViewSet
 from CRUDs.lote.views import LoteViewSet
@@ -28,7 +27,6 @@ from django.conf import settings
 
 router = routers.DefaultRouter()
 router.register(r'condicoesDePagamento', CondicoesDePagamentoViewSet)
-router.register(r'estoque', EstoqueViewSet)
 router.register(r'familias', FamiliasViewSet)
 router.register(r'fornecedores', FornecedoresViewSet)
 router.register(r'lote', LoteViewSet)

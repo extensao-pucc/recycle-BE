@@ -17,6 +17,7 @@ class Produtos(models.Model):
     familia = models.ForeignKey(Familias, on_delete=models.DO_NOTHING, verbose_name='Famílias', related_name="familia")
     fornecedor = models.ForeignKey(Fornecedores, on_delete=models.DO_NOTHING, verbose_name='Fornecedores', related_name="valores_fornecedor")
     NCM = models.CharField(verbose_name='NCM', max_length=10)
+    quantidade = models.DecimalField(max_digits=8, decimal_places=2, verbose_name='Quantidade', default=0)
     qualidade = models.ForeignKey(Qualidades, on_delete=models.DO_NOTHING, verbose_name='Qualidades', related_name="valores_qualidade")
     preco_compra = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Preço de Compra')
     preco_venda = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Preço de Venda')
