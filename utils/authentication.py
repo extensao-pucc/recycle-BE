@@ -3,6 +3,8 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from CRUDs.socios.serializers import SociosSerializer
 from CRUDs.socios.models import Socios
+import mysql.connector
+from mysql.connector import Error
 import uuid
 
 
@@ -52,3 +54,33 @@ class ForgetPasswordViewSet(viewsets.ViewSet):
 
         except Socios.DoesNotExist:
             return Response("Usuário não existe")
+
+
+class JoinPrecificacao(viewsets.ViewSet):
+    @action(detail=True, methods=['get'])
+    def join(self, request):
+        try:
+            connection = mysql.connector.connect(user='root', password='',host='127.0.0.1',database='recycledb',port='3306')
+
+            if connection.is_connected():
+                db_Info = connection.get_server_info()
+                print("Connected to MySQL Server version ", db_Info)
+                cursor = connection.cursor()
+                cursor.execute("select database();")
+                record = cursor.fetchone()
+                print("You're connected to database: ", record)
+
+                query = ("SELECT * FROM socios_socios")
+
+                cursor.execute(query)
+                records = cursor.fetchall();
+                
+
+            return Response(records)
+
+        except Error as e:
+            print("Error while connecting to MySQL", e)
+
+        
+       
+       
