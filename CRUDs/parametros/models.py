@@ -8,6 +8,7 @@ class Parametros(models.Model):
     prensa = models.CharField(verbose_name='Prensa', max_length=100, blank=False)
     remanufatura = models.CharField(verbose_name='Remanufatura', max_length=100, blank=False)
     triagem = models.CharField(verbose_name='Triagem', max_length=100, blank=False)
+    unidade_de_medida = models.CharField(verbose_name='Unidade de medida', max_length=6)
 
     class Meta:
         verbose_name_plural = "Parâmetros"
