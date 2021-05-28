@@ -57,7 +57,7 @@ class ForgetPasswordViewSet(viewsets.ViewSet):
 
 
 class JoinPrecificacao(viewsets.ViewSet):
-    @action(detail=True, methods=['get'])
+    @action(detail=True, methods=['post'])
     def join(self, request):
         try:
             connection = mysql.connector.connect(user='root', password='',host='127.0.0.1',database='recycledb',port='3306')
@@ -69,15 +69,15 @@ class JoinPrecificacao(viewsets.ViewSet):
                 cursor.execute("select database();")
                 record = cursor.fetchone()
                 print("You're connected to database: ", record)
-
-                query = ("SELECT * FROM socios_socios")
+                print(request.data['fornecedor'])
+                query = ("SELECT produtos_produtos.id as prod_id, produtos_produtos.descricao as prod_desc, qualidades_qualidades.id as qual_id, qualidades_qualidades.nome as qual_nome FROM produtos_produtos join precificacao_precificacao on produtos_produtos.id = precificacao_precificacao.produto_id join fornecedores_fornecedores on precificacao_precificacao.fornecedor_id = fornecedores_fornecedores.id join qualidades_qualidades on qualidades_qualidades.id = precificacao_precificacao.qualidade_id where precificacao_precificacao.fornecedor_id ="+request.data['fornecedor']+";")
 
                 cursor.execute(query)
-                records = cursor.fetchall();
+                records = cursor.fetchall()
                 
-
+            connection.close()
             return Response(records)
-
+        
         except Error as e:
             print("Error while connecting to MySQL", e)
 

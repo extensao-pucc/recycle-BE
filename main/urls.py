@@ -52,7 +52,7 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('login/', SigninViewSet.as_view({'post':'signin'})),
     path('login/forget/', ForgetPasswordViewSet.as_view({'post':'forget'})),
-    path('precificacao/', JoinPrecificacao.as_view({'get':'join'}))
+    path('fornproddetails/', JoinPrecificacao.as_view({'post':'join'}))
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
