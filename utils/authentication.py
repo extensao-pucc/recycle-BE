@@ -6,7 +6,7 @@ from CRUDs.socios.models import Socios
 import mysql.connector
 from mysql.connector import Error
 import uuid
-
+import json
 
 class SigninViewSet(viewsets.ViewSet):
     
@@ -57,7 +57,7 @@ class ForgetPasswordViewSet(viewsets.ViewSet):
 
 
 class JoinPrecificacao(viewsets.ViewSet):
-    @action(detail=True, methods=['get'])
+    @action(detail=True, methods=['post'])
     def join(self, request):
         try:
             connection = mysql.connector.connect(user='root', password='',host='127.0.0.1',database='recycledb',port='3306')
@@ -70,13 +70,21 @@ class JoinPrecificacao(viewsets.ViewSet):
                 record = cursor.fetchone()
                 print("You're connected to database: ", record)
 
-                query = ("SELECT * FROM socios_socios")
-
-                cursor.execute(query)
-                records = cursor.fetchall();
                 
 
-            return Response(records)
+                query = ("SELECT * FROM produtos_produtos join precificacao_precificacao on produtos_produtos.id = precificacao_precificacao.produto_id join fornecedores_fornecedores on precificacao_precificacao.fornecedor_id = fornecedores_fornecedores.id where precificacao_precificacao.fornecedor_id = "+request.data['fornecedor']+";")
+
+                cursor.execute(query)
+                row_headers=[x[0] for x in cursor.description]
+                records = cursor.fetchall()
+
+                json_data=[]
+
+                for rows in records:
+                    json_data.append(dict(zip(row_headers,rows)))
+            
+            
+            return Response(json_data)
 
         except Error as e:
             print("Error while connecting to MySQL", e)
