@@ -70,7 +70,7 @@ class JoinPrecificacao(viewsets.ViewSet):
                 record = cursor.fetchone()
                 print("You're connected to database: ", record)
                 print(request.data['fornecedor'])
-                query = ("SELECT produtos_produtos.id as prod_id, produtos_produtos.descricao as prod_desc, qualidades_qualidades.id as qual_id, qualidades_qualidades.nome as qual_nome FROM produtos_produtos join precificacao_precificacao on produtos_produtos.id = precificacao_precificacao.produto_id join fornecedores_fornecedores on precificacao_precificacao.fornecedor_id = fornecedores_fornecedores.id join qualidades_qualidades on qualidades_qualidades.id = precificacao_precificacao.qualidade_id where precificacao_precificacao.fornecedor_id ="+request.data['fornecedor']+";")
+                query = ("SELECT precificacao_precificacao.id as precificacao_id, produtos_produtos.id as prod_id, produtos_produtos.descricao as prod_desc, qualidades_qualidades.id as qual_id, qualidades_qualidades.nome as qual_nome FROM produtos_produtos join precificacao_precificacao on produtos_produtos.id = precificacao_precificacao.produto_id join fornecedores_fornecedores on precificacao_precificacao.fornecedor_id = fornecedores_fornecedores.id join qualidades_qualidades on qualidades_qualidades.id = precificacao_precificacao.qualidade_id where precificacao_precificacao.fornecedor_id ="+request.data['fornecedor']+";")
 
                 cursor.execute(query)
                 row_headers=[x[0] for x in cursor.description]
