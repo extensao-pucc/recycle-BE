@@ -6,7 +6,7 @@ from CRUDs.socios.models import Socios
 import mysql.connector
 from mysql.connector import Error
 import uuid
-
+import json
 
 class SigninViewSet(viewsets.ViewSet):
     
