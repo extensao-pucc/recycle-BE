@@ -13,14 +13,15 @@ from CRUDs.motivosDeParada.views import MotivosDeParadaViewSet
 from CRUDs.movimentacoes.views import MovimentacoesViewSet
 from CRUDs.naturezaDasOperacoes.views import NaturezaDasOperacoesViewSet
 from CRUDs.parametros.views import ParametrosViewSet
+from CRUDs.precificacao.views import PrecificacaoViewSet
 from CRUDs.prensas.views import PrensasViewSet
 from CRUDs.produtos.views import ProdutosViewSet
 from CRUDs.qualidades.views import QualidadesViewSet
 from CRUDs.socios.views import SociosViewSet
 from CRUDs.transportadoras.views import TransportadorasViewSet
-from CRUDs.unidadesDeMedida.views import UnidadesDeMedidaViewSet
 from utils.authentication import SigninViewSet
 from utils.authentication import ForgetPasswordViewSet
+from utils.authentication import JoinPrecificacao
 
 from django.conf.urls.static import static
 from django.conf import settings
@@ -37,12 +38,12 @@ router.register(r'motivosDeParada', MotivosDeParadaViewSet)
 router.register(r'movimentacoes', MovimentacoesViewSet)
 router.register(r'naturezaDasOperacoes', NaturezaDasOperacoesViewSet)
 router.register(r'parametros', ParametrosViewSet)
+router.register(r'precificacao', PrecificacaoViewSet)
 router.register(r'prensas', PrensasViewSet)
 router.register(r'produtos', ProdutosViewSet)
 router.register(r'qualidades', QualidadesViewSet)
 router.register(r'socios', SociosViewSet)
 router.register(r'transportadoras', TransportadorasViewSet)
-router.register(r'unidadesDeMedida', UnidadesDeMedidaViewSet)
 
 
 urlpatterns = [
@@ -50,7 +51,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('login/', SigninViewSet.as_view({'post':'signin'})),
-    path('login/forget/', ForgetPasswordViewSet.as_view({'post':'forget'}))
+    path('login/forget/', ForgetPasswordViewSet.as_view({'post':'forget'})),
+    path('fornproddetails/', JoinPrecificacao.as_view({'post':'join'}))
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
