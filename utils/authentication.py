@@ -3,8 +3,10 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from CRUDs.socios.serializers import SociosSerializer
 from CRUDs.socios.models import Socios
+import mysql.connector
+from mysql.connector import Error
 import uuid
-
+import json
 
 class SigninViewSet(viewsets.ViewSet):
     
@@ -52,3 +54,39 @@ class ForgetPasswordViewSet(viewsets.ViewSet):
 
         except Socios.DoesNotExist:
             return Response("Usuário não existe")
+
+
+class JoinPrecificacao(viewsets.ViewSet):
+    @action(detail=True, methods=['post'])
+    def join(self, request):
+        try:
+            connection = mysql.connector.connect(user='root', password='',host='127.0.0.1',database='recycledb',port='3306')
+
+            if connection.is_connected():
+                db_Info = connection.get_server_info()
+                print("Connected to MySQL Server version ", db_Info)
+                cursor = connection.cursor()
+                cursor.execute("select database();")
+                record = cursor.fetchone()
+                print("You're connected to database: ", record)
+                print(request.data['fornecedor'])
+                query = ("SELECT precificacao_precificacao.id as precificacao_id, produtos_produtos.id as prod_id, produtos_produtos.descricao as prod_desc, qualidades_qualidades.id as qual_id, qualidades_qualidades.nome as qual_nome FROM produtos_produtos join precificacao_precificacao on produtos_produtos.id = precificacao_precificacao.produto_id join fornecedores_fornecedores on precificacao_precificacao.fornecedor_id = fornecedores_fornecedores.id join qualidades_qualidades on qualidades_qualidades.id = precificacao_precificacao.qualidade_id where precificacao_precificacao.fornecedor_id ="+request.data['fornecedor']+";")
+
+                cursor.execute(query)
+                row_headers=[x[0] for x in cursor.description]
+                records = cursor.fetchall()
+
+                json_data=[]
+
+                for rows in records:
+                    json_data.append(dict(zip(row_headers,rows)))
+                
+            connection.close()
+            return Response(json_data)
+        
+        except Error as e:
+            print("Error while connecting to MySQL", e)
+
+        
+       
+       

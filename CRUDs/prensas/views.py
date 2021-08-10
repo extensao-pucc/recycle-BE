@@ -7,3 +7,5 @@ from .serializers import PrensasSerializer
 class PrensasViewSet(viewsets.ModelViewSet):
     queryset = Prensas.objects.all()
     serializer_class = PrensasSerializer
+
+

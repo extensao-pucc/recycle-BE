@@ -1,6 +1,6 @@
 from django.db import models
 from CRUDs.socios.models import Socios
-from CRUDs.produtos.models import Produtos
+from CRUDs.precificacao.models import Precificacao
 from CRUDs.lote.models import Lote
 
 class LoteItens(models.Model):
@@ -9,7 +9,7 @@ class LoteItens(models.Model):
     iniciado = models.DateTimeField(verbose_name='Iniciado', blank=False)
     num_lote = models.ForeignKey(Lote, on_delete=models.DO_NOTHING, verbose_name='Lote')
     num_recipiente = models.IntegerField(verbose_name='Numero do Recipiente')
-    produto = models.ForeignKey(Produtos, on_delete=models.DO_NOTHING, verbose_name='Produtos')
+    produto = models.ForeignKey(Precificacao, on_delete=models.DO_NOTHING, verbose_name='Produtos')
     quantidade = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Quantidade')
     socio = models.ForeignKey(Socios, on_delete=models.DO_NOTHING, verbose_name='Socios')
     tempo_total = models.IntegerField(verbose_name='Tempo Total', blank=False)
