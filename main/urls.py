@@ -22,6 +22,7 @@ from CRUDs.transportadoras.views import TransportadorasViewSet
 from utils.authentication import SigninViewSet
 from utils.authentication import ForgetPasswordViewSet
 from utils.authentication import JoinPrecificacao
+from utils.storedProcedures import save
 
 from django.conf.urls.static import static
 from django.conf import settings
@@ -45,6 +46,7 @@ router.register(r'qualidades', QualidadesViewSet)
 router.register(r'socios', SociosViewSet)
 router.register(r'transportadoras', TransportadorasViewSet)
 
+ 
 
 urlpatterns = [
     path('', include(router.urls)),
@@ -52,7 +54,8 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('login/', SigninViewSet.as_view({'post':'signin'})),
     path('login/forget/', ForgetPasswordViewSet.as_view({'post':'forget'})),
-    path('fornproddetails/', JoinPrecificacao.as_view({'post':'join'}))
+    path('fornproddetails/', JoinPrecificacao.as_view({'post':'join'})),
+    path('procedure/', save.as_view({'post':'saveLote'}))
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
