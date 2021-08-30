@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 
+from CRUDs.clientes.views import ClientesViewSet
 from CRUDs.condicoesDePagamento.views import CondicoesDePagamentoViewSet
 from CRUDs.familias.views import FamiliasViewSet
 from CRUDs.fornecedores.views import FornecedoresViewSet
@@ -28,6 +29,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 router = routers.DefaultRouter()
+router.register(r'clientes', ClientesViewSet)
 router.register(r'condicoesDePagamento', CondicoesDePagamentoViewSet)
 router.register(r'familias', FamiliasViewSet)
 router.register(r'fornecedores', FornecedoresViewSet)

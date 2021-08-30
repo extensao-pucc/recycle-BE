@@ -14,7 +14,7 @@ class Precificacao(models.Model):
     produto = models.ForeignKey(Produtos, on_delete=models.DO_NOTHING, related_name="produto")
     
     def __str__(self):
-        return self.produto
+        return self.produto.descricao
     
     class Meta:
         verbose_name_plural = "Precificacao"
