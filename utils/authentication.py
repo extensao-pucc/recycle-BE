@@ -7,6 +7,7 @@ import mysql.connector
 from mysql.connector import Error
 import uuid
 import json
+import django.db.transaction 
 
 class SigninViewSet(viewsets.ViewSet):
     

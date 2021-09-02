@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
+    'CRUDs.clientes.apps.ClientesConfig',
     'CRUDs.condicoesDePagamento.apps.CondicoesDePagamentoConfig',
     'CRUDs.familias.apps.FamiliasConfig',
     'CRUDs.fornecedores.apps.FornecedoresConfig',
@@ -68,6 +69,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.cache.CacheMiddleware',
+    # 'django.middleware.transaction.TransactionMiddleware',
 ]
 
 CORS_ALLOWED_ORIGINS = [
