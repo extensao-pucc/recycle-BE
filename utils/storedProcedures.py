@@ -6,16 +6,6 @@ from django.db import transaction
 import mysql.connector
 from mysql.connector import Error
 
-
-from CRUDs.lote.serializers import LoteSerializer
-from CRUDs.familias.serializers import FamiliasSerializer
-from CRUDs.loteParadas.serializers import LoteParadasSerializer
-
-import sys
-import json
-
-from django.http import JsonResponse
-
 class save(viewsets.ViewSet):
 
     @action(detail=True, methods=['POST'])
@@ -38,7 +28,7 @@ class save(viewsets.ViewSet):
                 cursor.execute(query,data)
                 
             # --------------------    Insert na tabela de PARADAS de um lote
-                for i, item in enumerate(request.data['lote_paradas']):
+                for i, item in enumerate(request.data['lote_parada']):
                     query = ("INSERT INTO loteparadas_loteparadas VALUES (%s,%s, %s,%s, %s, %s,%s);")
                     data = (request.data['lote_parada'][i]['id'],
                             request.data['lote_parada'][i]['finalizado'],
@@ -67,7 +57,7 @@ class save(viewsets.ViewSet):
 
             # --------------------    Insert na tebela de Movimentações
                 for i, item in enumerate(request.data['movimentacoes']):
-                    query = ("INSERT INTO loteitens_loteitens VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s);")                   
+                    query = ("INSERT INTO movimentacoes_movimentacoes VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s);")                   
                     data = (request.data['movimentacoes'][i]['id'],
                             request.data['movimentacoes'][i]['data'],
                             request.data['movimentacoes'][i]['entrada_saida'],
@@ -85,6 +75,7 @@ class save(viewsets.ViewSet):
             connection.close()
             return Response("Everything os OK", status=200)
         except Exception as err:
+            print(err)
             return Response("Everything sucks", status=404)
             connection.close()
             raise
