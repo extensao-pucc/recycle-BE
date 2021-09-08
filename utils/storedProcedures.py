@@ -6,7 +6,7 @@ from django.db import transaction
 import mysql.connector
 from mysql.connector import Error
 
-class save(viewsets.ViewSet):
+class saveProduction(viewsets.ViewSet):
 
     @action(detail=True, methods=['POST'])
     def saveLote(self,request):
@@ -28,18 +28,19 @@ class save(viewsets.ViewSet):
                 cursor.execute(query,data)
                 
             # --------------------    Insert na tabela de PARADAS de um lote
-                for i, item in enumerate(request.data['lote_parada']):
-                    query = ("INSERT INTO loteparadas_loteparadas VALUES (%s,%s, %s,%s, %s, %s,%s);")
-                    data = (request.data['lote_parada'][i]['id'],
-                            request.data['lote_parada'][i]['finalizado'],
-                            request.data['lote_parada'][i]['iniciado'],
-                            request.data['lote_parada'][i]['sequencia'],
-                            request.data['lote_parada'][i]['tempo_total'],
-                            request.data['lote_parada'][i]['motivo'],
-                            request.data['lote_parada'][i]['num_lote']
-                        )   
-                    cursor.execute(query,data)
-            
+                if (request.data['lote_parada'] != 'vazio'):
+                    for i, item in enumerate(request.data['lote_parada']):
+                        query = ("INSERT INTO loteparadas_loteparadas VALUES (%s,%s, %s,%s, %s, %s,%s);")
+                        data = (request.data['lote_parada'][i]['id'],
+                                request.data['lote_parada'][i]['finalizado'],
+                                request.data['lote_parada'][i]['iniciado'],
+                                request.data['lote_parada'][i]['sequencia'],
+                                request.data['lote_parada'][i]['tempo_total'],
+                                request.data['lote_parada'][i]['motivo'],
+                                request.data['lote_parada'][i]['num_lote']
+                            )   
+                        cursor.execute(query,data)
+
             # --------------------    Insert na tabela de ITENS pertencente ao lote              
                 for i, item in enumerate(request.data['lote_itens']):
                     query = ("INSERT INTO loteitens_loteitens VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s);")                   
@@ -69,7 +70,19 @@ class save(viewsets.ViewSet):
                             request.data['movimentacoes'][i]['cod_produto']
                         )          
                     cursor.execute(query,data)
+
             # --------------------  Fim dos inserts
+
+                # -------------------- Atualiza a quantidade em precificacao
+                print(request.data)
+                for i, item in enumerate(request.data['precificacao']):
+                    query = ("UPDATE precificacao_precificacao SET quantidade= quantidade + %s where produto_id=%s and fornecedor_id=%s and qualidade_id=%s;")   
+                    data = (request.data['precificacao'][i]['quantidade'],
+                            request.data['precificacao'][i]['produto_id'],
+                            request.data['precificacao'][i]['fornecedor_id'],
+                            request.data['precificacao'][i]['qualidade_id'],
+                        )    
+                    cursor.execute(query,data)    
 
                 connection.commit()
             connection.close()

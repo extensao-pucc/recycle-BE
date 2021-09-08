@@ -23,7 +23,7 @@ from CRUDs.transportadoras.views import TransportadorasViewSet
 from utils.authentication import SigninViewSet
 from utils.authentication import ForgetPasswordViewSet
 from utils.authentication import JoinPrecificacao
-from utils.storedProcedures import save
+from utils.storedProcedures import saveProduction
 
 from django.conf.urls.static import static
 from django.conf import settings
@@ -57,7 +57,7 @@ urlpatterns = [
     path('login/', SigninViewSet.as_view({'post':'signin'})),
     path('login/forget/', ForgetPasswordViewSet.as_view({'post':'forget'})),
     path('fornproddetails/', JoinPrecificacao.as_view({'post':'join'})),
-    path('procedure/', save.as_view({'post':'saveLote'}))
+    path('procedure/', saveProduction.as_view({'post':'saveLote'}))
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
