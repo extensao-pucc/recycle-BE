@@ -87,8 +87,8 @@ class saveProduction(viewsets.ViewSet):
                 connection.commit()
             connection.close()
             return Response("Everything os OK", status=200)
-        except Exception as err:
+        except mysql.connector.Error as err:
             print(err)
-            return Response("Everything sucks", status=404)
+            return Response(f"Error: {err}")
             connection.close()
             raise
