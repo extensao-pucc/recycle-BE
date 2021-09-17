@@ -73,8 +73,7 @@ class saveProduction(viewsets.ViewSet):
 
             # --------------------  Fim dos inserts
 
-                # -------------------- Atualiza a quantidade em precificacao
-                print(request.data)
+            # -------------------- Atualiza a quantidade em precificacao
                 for i, item in enumerate(request.data['precificacao']):
                     query = ("UPDATE precificacao_precificacao SET quantidade= quantidade + %s where produto_id=%s and fornecedor_id=%s and qualidade_id=%s;")   
                     data = (request.data['precificacao'][i]['quantidade'],
@@ -88,7 +87,5 @@ class saveProduction(viewsets.ViewSet):
             connection.close()
             return Response("Everything os OK", status=200)
         except mysql.connector.Error as err:
-            print(err)
-            return Response(f"Error: {err}")
             connection.close()
-            raise
+            return Response(f"Error: {err}", status=status.HTTP_400_BAD_REQUEST)

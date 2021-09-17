@@ -18,3 +18,4 @@ class Precificacao(models.Model):
     
     class Meta:
         verbose_name_plural = "Precificacao"
+        unique_together = ("fornecedor", "qualidade", "produto")
