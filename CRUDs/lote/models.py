@@ -6,7 +6,7 @@ from CRUDs.fornecedores.models import Fornecedores
 class Lote(models.Model):
     num_lote = models.IntegerField(verbose_name='Numero do Lote', primary_key=True)
     finalizado = models.DateTimeField(verbose_name='Finalizado', blank=False)
-    fornecedor = models.ForeignKey(Fornecedores, on_delete=models.DO_NOTHING, verbose_name='Fornecedores')
+    fornecedor = models.ForeignKey(Fornecedores, on_delete=models.DO_NOTHING, verbose_name='Fornecedores', blank=True)
     iniciado = models.DateTimeField(verbose_name='Iniciado', blank=False)
     observacao = models.CharField(verbose_name='Observação', max_length=200)
     socio = models.ForeignKey(Socios, on_delete=models.DO_NOTHING, verbose_name='Socios')

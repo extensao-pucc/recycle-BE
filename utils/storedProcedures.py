@@ -73,8 +73,7 @@ class saveProduction(viewsets.ViewSet):
 
             # --------------------  Fim dos inserts
 
-                # -------------------- Atualiza a quantidade em precificacao
-                print(request.data)
+            # -------------------- Atualiza a quantidade em precificacao
                 for i, item in enumerate(request.data['precificacao']):
                     query = ("UPDATE precificacao_precificacao SET quantidade= quantidade + %s where produto_id=%s and fornecedor_id=%s and qualidade_id=%s;")   
                     data = (request.data['precificacao'][i]['quantidade'],
