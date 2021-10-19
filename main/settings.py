@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'CRUDs.qualidades.apps.QualidadesConfig',
     'CRUDs.socios.apps.SociosConfig',
     'CRUDs.transportadoras.apps.TransportadorasConfig',
+    'financeiro.contas.apps.ContasConfig',
 ]
 
 MIDDLEWARE = [

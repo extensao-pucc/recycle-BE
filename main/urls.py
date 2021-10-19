@@ -20,6 +20,7 @@ from CRUDs.produtos.views import ProdutosViewSet
 from CRUDs.qualidades.views import QualidadesViewSet
 from CRUDs.socios.views import SociosViewSet
 from CRUDs.transportadoras.views import TransportadorasViewSet
+from financeiro.contas.views import ContasViewSet
 from utils.authentication import SigninViewSet
 from utils.authentication import ForgetPasswordViewSet
 from utils.authentication import JoinPrecificacao
@@ -47,8 +48,7 @@ router.register(r'produtos', ProdutosViewSet)
 router.register(r'qualidades', QualidadesViewSet)
 router.register(r'socios', SociosViewSet)
 router.register(r'transportadoras', TransportadorasViewSet)
-
- 
+router.register(r'contas', ContasViewSet) 
 
 urlpatterns = [
     path('', include(router.urls)),
