@@ -25,7 +25,6 @@ class SigninViewSet(viewsets.ViewSet):
             
             person = Socios.objects.get(matricula=request.data['matricula'])
             person = SociosSerializer(person)
-            print(f"senha {person.data['senha']} ------------- {person.data['key']}")
             decryptsenha = decryptPassword(person.data['senha'], person.data['key'])
 
 
