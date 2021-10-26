@@ -59,7 +59,8 @@ urlpatterns = [
     path('login/forget/', ForgetPasswordViewSet.as_view({'post':'forget'})),
     path('fornproddetails/', JoinPrecificacao.as_view({'post':'join'})),
     path('procedure/', saveProduction.as_view({'post':'saveLote'})),
-    path('dateToPay/', toPay.as_view({'post':'payDate'}))
+    path('dateToPay/', toPay.as_view({'post':'payDate'})),
+    path('valueToPay/', toPay.as_view({'post':'payValue'}))
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

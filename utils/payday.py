@@ -34,3 +34,31 @@ class toPay(viewsets.ViewSet):
         except mysql.connector.Error as err:
             connection.close()
             return Response(f"Error: {err}", status=status.HTTP_400_BAD_REQUEST)
+
+
+    @action(detail=True, methods=['POST'])
+    def payValue (self, request):
+        try:
+            connection = mysql.connector.connect(user='root', password='',host='127.0.0.1',database='recycledb',port='3306')
+
+            if connection.is_connected():
+                cursor = connection.cursor()
+                query = ("SELECT * FROM contas_contas WHERE valor BETWEEN %s and %s") 
+                data = (request.data['valor_inicial'],
+                        request.data['valor_final']        
+                )
+                cursor.execute(query,data)
+
+                row_headers=[x[0] for x in cursor.description]
+                records = cursor.fetchall()
+
+                json_data=[]
+
+                for rows in records:
+                    json_data.append(dict(zip(row_headers,rows)))
+                
+                return Response(json_data)
+
+        except mysql.connector.Error as err:
+            connection.close()
+            return Response(f"Error: {err}", status=status.HTTP_400_BAD_REQUEST)
