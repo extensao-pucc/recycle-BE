@@ -20,6 +20,10 @@ from CRUDs.produtos.views import ProdutosViewSet
 from CRUDs.qualidades.views import QualidadesViewSet
 from CRUDs.socios.views import SociosViewSet
 from CRUDs.transportadoras.views import TransportadorasViewSet
+from CRUDs.vendas.views import VendasViewSet
+from CRUDs.vendasItens.views import VendasItensViewSet
+
+
 from utils.authentication import SigninViewSet
 from utils.authentication import ForgetPasswordViewSet
 from utils.authentication import JoinPrecificacao
@@ -47,6 +51,8 @@ router.register(r'produtos', ProdutosViewSet)
 router.register(r'qualidades', QualidadesViewSet)
 router.register(r'socios', SociosViewSet)
 router.register(r'transportadoras', TransportadorasViewSet)
+router.register(r'vendas', VendasViewSet)
+router.register(r'vendasItens', VendasItensViewSet)
 
  
 
@@ -57,7 +63,8 @@ urlpatterns = [
     path('login/', SigninViewSet.as_view({'post':'signin'})),
     path('login/forget/', ForgetPasswordViewSet.as_view({'post':'forget'})),
     path('fornproddetails/', JoinPrecificacao.as_view({'post':'join'})),
-    path('procedure/', saveProduction.as_view({'post':'saveLote'}))
+    path('procedure/', saveProduction.as_view({'post':'saveLote'})),
+    path('saveRemanufatura/', saveProduction.as_view({'post':'saveRemanufatura'})),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

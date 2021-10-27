@@ -14,7 +14,7 @@ class saveProduction(viewsets.ViewSet):
             connection = mysql.connector.connect(user='root', password='',host='127.0.0.1',database='recycledb',port='3306')
             cursor = connection.cursor()
             
-            with transaction.atomic():               
+            with transaction.atomic():
                 # --------------------    Insert na tabela de lote
                 query = ("INSERT INTO lote_lote VALUES (%s,%s, %s,%s,%s, %s,%s);")
                 data = (request.data['lote']['num_lote'],
@@ -24,7 +24,7 @@ class saveProduction(viewsets.ViewSet):
                         request.data['lote']['tempo_total'],
                         request.data['lote']['fornecedor'],
                         request.data['lote']['socio']
-                    )
+                )
                 cursor.execute(query,data)
                 
             # --------------------    Insert na tabela de PARADAS de um lote
@@ -89,3 +89,7 @@ class saveProduction(viewsets.ViewSet):
         except mysql.connector.Error as err:
             connection.close()
             return Response(f"Error: {err}", status=status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=True, methods=['POST'])
+    def saveRemanufatura(self,request):
+        print(request.data)
