@@ -60,7 +60,9 @@ urlpatterns = [
     path('fornproddetails/', JoinPrecificacao.as_view({'post':'join'})),
     path('procedure/', saveProduction.as_view({'post':'saveLote'})),
     path('dateToPay/', toPay.as_view({'post':'payDate'})),
-    path('valueToPay/', toPay.as_view({'post':'payValue'}))
+    path('valueToPay/', toPay.as_view({'post':'payValue'})),
+    path('payTotalValueMonthly/', toPay.as_view({'get':'payTotalValueMonthly'})),
+    path('receiveTotalValueMonthly/', toPay.as_view({'get':'receiveTotalValueMonthly'}))
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
