@@ -14,8 +14,7 @@ class toPay(viewsets.ViewSet):
 
             if connection.is_connected():
                 cursor = connection.cursor()
-                print(request.data['data_final'])
-                query = ("SELECT * FROM contas_contas WHERE DATE_FORMAT(data, '%d/%m/%Y') BETWEEN %s and %s") 
+                query = ("SELECT * FROM contas_contas WHERE data BETWEEN %s and %s") 
                 data = (request.data['data_inicial'],
                         request.data['data_final']        
                 )
