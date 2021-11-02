@@ -5,6 +5,8 @@ from financeiro.contas.models import Contas
 from mysql.connector import Error
 import mysql.connector
 
+from datetime import datetime
+
 class toPay(viewsets.ViewSet):
 
     @action(detail=True, methods=['POST'])
@@ -67,6 +69,8 @@ class toPay(viewsets.ViewSet):
         try:
             connection = mysql.connector.connect(user='root', password='',host='127.0.0.1',database='recycledb',port='3306')
 
+            intervalo = 12 - (12 - int(datetime.today().strftime('%m'))) - 1
+
             if connection.is_connected():
                 cursor = connection.cursor()
                 query = (
@@ -77,26 +81,37 @@ class toPay(viewsets.ViewSet):
                         "FROM                                                                       "+
                         "    contas_contas,                                                         "+
                         "    ( select @lastYear := date_add( DATE_FORMAT(NOW(),                     "+
-                        "        '%Y-%m-01'), interval -12 month) ) sqlvar                          "+
+                        "        '%Y-%m-01'), interval -"+str(intervalo)+" month) ) sqlvar          "+
                         "WHERE                                                                      "+
                         "    data >= @lastYear and tipo = 'A pagar' and situacao != 'Cancelado'     "+
                         "group by                                                                   "+
-                        "    MONTH(data)                                                            "+
+                        "    MONTH(data),                                                           "+
+                        "    YEAR(data)                                                             "+
                         "order by                                                                   "+
                         "    YEAR(data) ASC,                                                        "+
                         "    MONTH(data) ASC                                                        "
                 )
-                
+
                 cursor.execute(query)
 
                 row_headers=[x[0] for x in cursor.description]
                 records = cursor.fetchall()
-
-                json_data=[]
-
-                for rows in records:
-                    json_data.append(dict(zip(row_headers,rows)))
                 
+                json_data=[]
+                
+                mes = 1
+                i = 0
+                while mes <= 12:
+                    if i < len(records):
+                        if records[i][0] != mes:
+                            json_data.append(dict(zip(row_headers,(mes,int(datetime.today().strftime('%Y')), 0))))
+                        else:
+                            json_data.append(dict(zip(row_headers,records[i])))
+                            i = i + 1
+                    else:
+                        json_data.append(dict(zip(row_headers,(mes,int(datetime.today().strftime('%Y')), 0))))
+                    mes = mes + 1
+
                 return Response(json_data)
 
         except mysql.connector.Error as err:
@@ -108,6 +123,8 @@ class toPay(viewsets.ViewSet):
         try:
             connection = mysql.connector.connect(user='root', password='',host='127.0.0.1',database='recycledb',port='3306')
 
+            intervalo = 12 - (12 - int(datetime.today().strftime('%m'))) - 1
+
             if connection.is_connected():
                 cursor = connection.cursor()
                 query = (
@@ -118,26 +135,37 @@ class toPay(viewsets.ViewSet):
                         "FROM                                                                       "+
                         "    contas_contas,                                                         "+
                         "    ( select @lastYear := date_add( DATE_FORMAT(NOW(),                     "+
-                        "        '%Y-%m-01'), interval -12 month) ) sqlvar                          "+
+                        "        '%Y-%m-01'), interval -"+str(intervalo)+" month) ) sqlvar          "+
                         "WHERE                                                                      "+
                         "    data >= @lastYear and tipo = 'A receber' and situacao != 'Cancelado'   "+
                         "group by                                                                   "+
-                        "    MONTH(data)                                                            "+
+                        "    MONTH(data),                                                           "+
+                        "    YEAR(data)                                                             "+
                         "order by                                                                   "+
                         "    YEAR(data) ASC,                                                        "+
                         "    MONTH(data) ASC                                                        "
                 )
-                
+
                 cursor.execute(query)
 
                 row_headers=[x[0] for x in cursor.description]
                 records = cursor.fetchall()
-
-                json_data=[]
-
-                for rows in records:
-                    json_data.append(dict(zip(row_headers,rows)))
                 
+                json_data=[]
+                
+                mes = 1
+                i = 0
+                while mes <= 12:
+                    if i < len(records):
+                        if records[i][0] != mes:
+                            json_data.append(dict(zip(row_headers,(mes,int(datetime.today().strftime('%Y')), 0))))
+                        else:
+                            json_data.append(dict(zip(row_headers,records[i])))
+                            i = i + 1
+                    else:
+                        json_data.append(dict(zip(row_headers,(mes,int(datetime.today().strftime('%Y')), 0))))
+                    mes = mes + 1
+
                 return Response(json_data)
 
         except mysql.connector.Error as err:
