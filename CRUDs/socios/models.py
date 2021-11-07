@@ -19,7 +19,7 @@ class Socios(models.Model):
     complemento = models.CharField(verbose_name='Complemento', max_length=100, blank=True)
     CEP = models.CharField(verbose_name='CEP', max_length=9)
     CPF = models.CharField(verbose_name='CPF', max_length=14, blank=False)
-    data_de_admissao = models.DateField(verbose_name='Data de admissão', auto_now_add=True, blank=False)
+    data_de_admissao = models.DateField(verbose_name='Data de admissão', blank=False)
     data_de_demissao = models.DateField(verbose_name='Data de demissão', blank=True, null=True)
     data_de_nascimento = models.DateField(verbose_name='Data de nascimento', blank=False)
     data_emissao = models.DateField(verbose_name='Data de Emissão', blank=False)

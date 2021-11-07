@@ -68,7 +68,10 @@ urlpatterns = [
     path('procedure/', saveProduction.as_view({'post':'saveLote'})),
     path('saveRemanufatura/', saveProduction.as_view({'post':'saveRemanufatura'})),
     path('dateToPay/', toPay.as_view({'post':'payDate'})),
-    path('valueToPay/', toPay.as_view({'post':'payValue'}))
+    path('movimentDate/', toPay.as_view({'post':'movimentDate'})),
+    path('valueToPay/', toPay.as_view({'post':'payValue'})),
+    path('payTotalValueMonthly/', toPay.as_view({'get':'payTotalValueMonthly'})),
+    path('receiveTotalValueMonthly/', toPay.as_view({'get':'receiveTotalValueMonthly'}))
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

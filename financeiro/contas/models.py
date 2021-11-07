@@ -2,7 +2,7 @@ from django.db import models
 
 class Contas(models.Model):
     id = models.AutoField(primary_key=True)
-    data = models.DateField(verbose_name='Data', auto_now_add=True, blank=False)
+    data = models.DateField(verbose_name='Data', blank=False)
     descricao = models.CharField(verbose_name='Descrição', max_length=100)
     tipo = models.CharField(verbose_name='Tipo', max_length=15, blank=False)
     situacao = models.CharField(verbose_name='Situação', max_length=15, blank=False)
