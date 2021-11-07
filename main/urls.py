@@ -20,14 +20,15 @@ from CRUDs.produtos.views import ProdutosViewSet
 from CRUDs.qualidades.views import QualidadesViewSet
 from CRUDs.socios.views import SociosViewSet
 from CRUDs.transportadoras.views import TransportadorasViewSet
-from CRUDs.vendas.views import VendasViewSet
-from CRUDs.vendasItens.views import VendasItensViewSet
 
-
+from financeiro.vendas.views import VendasViewSet
+from financeiro.vendasItens.views import VendasItensViewSet
+from financeiro.contas.views import ContasViewSet
 from utils.authentication import SigninViewSet
 from utils.authentication import ForgetPasswordViewSet
 from utils.authentication import JoinPrecificacao
 from utils.storedProcedures import saveProduction
+from utils.payday import toPay
 
 from django.conf.urls.static import static
 from django.conf import settings
@@ -55,6 +56,7 @@ router.register(r'vendas', VendasViewSet)
 router.register(r'vendasItens', VendasItensViewSet)
 
  
+router.register(r'contas', ContasViewSet) 
 
 urlpatterns = [
     path('', include(router.urls)),
@@ -65,6 +67,8 @@ urlpatterns = [
     path('fornproddetails/', JoinPrecificacao.as_view({'post':'join'})),
     path('procedure/', saveProduction.as_view({'post':'saveLote'})),
     path('saveRemanufatura/', saveProduction.as_view({'post':'saveRemanufatura'})),
+    path('dateToPay/', toPay.as_view({'post':'payDate'})),
+    path('valueToPay/', toPay.as_view({'post':'payValue'}))
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

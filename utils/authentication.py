@@ -2,12 +2,18 @@ from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from CRUDs.socios.serializers import SociosSerializer
-from CRUDs.socios.models import Socios
+from CRUDs.socios.models import Socios, encryptPassword, generate_key
 import mysql.connector
 from mysql.connector import Error
 import uuid
-import json
-import django.db.transaction 
+from cryptography.fernet import Fernet
+
+
+def decryptPassword(password, key):
+    keyencode = key.encode()
+    fernet = Fernet(keyencode)
+    decryptPassw = fernet.decrypt(password.encode())
+    return decryptPassw.decode()
 
 class SigninViewSet(viewsets.ViewSet):
     
@@ -16,17 +22,22 @@ class SigninViewSet(viewsets.ViewSet):
        
         try:
 
-            person = Socios.objects.get(matricula=request.data['matricula'], senha=request.data['senha'])
+            
+            person = Socios.objects.get(matricula=request.data['matricula'])
             person = SociosSerializer(person)
-            return Response({
-                'token': uuid.uuid4(),
-                'person': {
-                    'matricula': person.data['matricula'], 
-                    'nome': person.data['nome'],
-                    'perfil': person.data['perfil'],
-                    'foto': person.data['foto']},
-                'mssg': 'Usuario encontrado',               
-            })
+            decryptsenha = decryptPassword(person.data['senha'], person.data['key'])
+
+
+            if(decryptsenha==request.data['senha']):
+                return Response({
+                        'token': uuid.uuid4(),
+                        'person': {
+                            'matricula': person.data['matricula'], 
+                            'nome': person.data['nome'],
+                            'perfil': person.data['perfil'],
+                            'foto': person.data['foto']},
+                        'mssg': 'Usuario encontrado',               
+                    }) 
 
         except Socios.DoesNotExist:
             return Response({
@@ -41,21 +52,28 @@ class ForgetPasswordViewSet(viewsets.ViewSet):
 
         try:
             person = Socios.objects.get(matricula=request.data['matricula'])
-
-            if person.senha != request.data['old_password']:
+            
+            decryptsenha = decryptPassword(person.senha, person.key)
+            print(decryptsenha)
+            if decryptsenha != request.data['old_password']:
                 return Response("Senha atual incorreta.")
 
-            if person.senha == request.data['new_password']:
+            if decryptsenha == request.data['new_password']:
                 return Response("Altere para uma senha diferente da atual")
             
-            person.senha = request.data['new_password']
-            person.save()
-
-            return Response(status=200)
+            
+            new_key = generate_key()
+            new_senha = encryptPassword(request.data['new_password'], new_key)
+            person.senha = new_senha
+            person.key = new_key
+            person.my_save()            
 
         except Socios.DoesNotExist:
             return Response("Usuário não existe")
-
+        except Exception as error:
+            return Response(error)
+        else:
+            return Response("Senha atualizada com sucesso", status=200)
 
 class JoinPrecificacao(viewsets.ViewSet):
     @action(detail=True, methods=['post'])
