@@ -171,7 +171,6 @@ class toPay(viewsets.ViewSet):
             connection.close()
             return Response(f"Error: {err}", status=status.HTTP_400_BAD_REQUEST)
     
-    
     @action(detail=True, methods=['POST'])
     def movimentDate (self, request):
         try:
@@ -188,6 +187,40 @@ class toPay(viewsets.ViewSet):
                 else:
                     query = ("SELECT * FROM movimentacoes_movimentacoes WHERE `cod_produto_id`=" + str(request.data['product']['id'])) 
                     data = (request.data['product']['id'])
+                    
+                cursor.execute(query,data)
+
+                row_headers=[x[0] for x in cursor.description]
+                records = cursor.fetchall()
+
+                json_data=[]
+
+                for rows in records:
+                    json_data.append(dict(zip(row_headers,rows)))
+                
+                return Response(json_data)
+
+        except mysql.connector.Error as err:
+            connection.close()
+            return Response(f"Error: {err}", status=status.HTTP_400_BAD_REQUEST)
+
+
+    @action(detail=True, methods=['POST'])
+    def productionHistory (self, request):
+        try:
+            connection = mysql.connector.connect(user='root', password='',host='127.0.0.1',database='recycledb',port='3306')
+
+            if connection.is_connected():
+                cursor = connection.cursor()
+                if request.data['inicio'] != '' and request.data['fim'] != '': 
+                    query = ("SELECT * FROM lote_lote WHERE num_lote in (select numero_tipo from recycledb.movimentacoes_movimentacoes where tipo= %s) AND DATE_FORMAT(data, '%Y-%m-%d') BETWEEN %s and %s") 
+                    data = (request.data['type'],
+                            request.data['inicio'],
+                            request.data['fim']        
+                    )
+                else:
+                    query = ("SELECT * FROM lote_lote WHERE num_lote in (select numero_tipo from recycledb.movimentacoes_movimentacoes where tipo= %s)") 
+                    data = (request.data['type'])
                     
                 cursor.execute(query,data)
 
