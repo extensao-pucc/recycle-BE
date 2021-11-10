@@ -69,6 +69,7 @@ urlpatterns = [
     path('saveRemanufatura/', saveProduction.as_view({'post':'saveRemanufatura'})),
     path('dateToPay/', toPay.as_view({'post':'payDate'})),
     path('movimentDate/', toPay.as_view({'post':'movimentDate'})),
+    path('productionHistory/', toPay.as_view({'post':'productionHistory'})),
     path('valueToPay/', toPay.as_view({'post':'payValue'})),
     path('payTotalValueMonthly/', toPay.as_view({'get':'payTotalValueMonthly'})),
     path('receiveTotalValueMonthly/', toPay.as_view({'get':'receiveTotalValueMonthly'}))
