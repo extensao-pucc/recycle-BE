@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class VendasConfig(AppConfig):
-    name = 'CRUDs.vendas'
+    name = 'financeiro.vendas'

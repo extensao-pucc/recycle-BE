@@ -21,8 +21,6 @@ class SigninViewSet(viewsets.ViewSet):
     def signin(self, request):
        
         try:
-
-            
             person = Socios.objects.get(matricula=request.data['matricula'])
             person = SociosSerializer(person)
             decryptsenha = decryptPassword(person.data['senha'], person.data['key'])

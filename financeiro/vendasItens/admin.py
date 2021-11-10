@@ -3,11 +3,11 @@ from .models import VendasItens
 
 
 class VendasItensAdmin(admin.ModelAdmin):
-    list_display = ('id','descricao')
-    list_display_links = ('id','descricao')
-    list_filter = ('id','descricao')
+    list_display = ('venda','precificacao')
+    list_display_links = ('venda','precificacao')
+    list_filter = ('venda','precificacao')
     list_per_page = 10
-    search_fields = ('id','descricao')
+    search_fields = ('venda','precificacao')
 
 
 admin.site.register(VendasItens, VendasItensAdmin)
