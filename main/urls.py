@@ -20,6 +20,9 @@ from CRUDs.produtos.views import ProdutosViewSet
 from CRUDs.qualidades.views import QualidadesViewSet
 from CRUDs.socios.views import SociosViewSet
 from CRUDs.transportadoras.views import TransportadorasViewSet
+
+from financeiro.vendas.views import VendasViewSet
+from financeiro.vendasItens.views import VendasItensViewSet
 from financeiro.contas.views import ContasViewSet
 from utils.authentication import SigninViewSet
 from utils.authentication import ForgetPasswordViewSet
@@ -49,6 +52,10 @@ router.register(r'produtos', ProdutosViewSet)
 router.register(r'qualidades', QualidadesViewSet)
 router.register(r'socios', SociosViewSet)
 router.register(r'transportadoras', TransportadorasViewSet)
+router.register(r'vendas', VendasViewSet)
+router.register(r'vendasItens', VendasItensViewSet)
+
+ 
 router.register(r'contas', ContasViewSet) 
 
 urlpatterns = [
@@ -59,6 +66,7 @@ urlpatterns = [
     path('login/forget/', ForgetPasswordViewSet.as_view({'post':'forget'})),
     path('fornproddetails/', JoinPrecificacao.as_view({'post':'join'})),
     path('procedure/', saveProduction.as_view({'post':'saveLote'})),
+    path('saveRemanufatura/', saveProduction.as_view({'post':'saveRemanufatura'})),
     path('dateToPay/', toPay.as_view({'post':'payDate'})),
     path('movimentDate/', toPay.as_view({'post':'movimentDate'})),
     path('productionHistory/', toPay.as_view({'post':'productionHistory'})),

@@ -58,6 +58,8 @@ INSTALLED_APPS = [
     'CRUDs.qualidades.apps.QualidadesConfig',
     'CRUDs.socios.apps.SociosConfig',
     'CRUDs.transportadoras.apps.TransportadorasConfig',
+    'financeiro.vendas.apps.VendasConfig',
+    'financeiro.vendasItens.apps.VendasItensConfig',
     'financeiro.contas.apps.ContasConfig',
 ]
 

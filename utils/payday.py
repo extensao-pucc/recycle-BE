@@ -214,22 +214,15 @@ class toPay(viewsets.ViewSet):
                 cursor = connection.cursor()
                 if request.data['inicio'] != '' and request.data['fim'] != '': 
                     print('to aqui')
-                    query = ("SELECT * FROM lote_lote WHERE num_lote in (select numero_tipo from recycledb.movimentacoes_movimentacoes where tipo=" + str(request.data['producao']) +") AND DATE_FORMAT(iniciado, '%Y-%m-%d') BETWEEN " + request.data['inicio'] +" and " + request.data['fim'] + "")
+                    query = ("SELECT * FROM lote_lote WHERE num_lote in (select numero_tipo from recycledb.movimentacoes_movimentacoes where tipo=" + str(request.data['producao']) +") AND DATE_FORMAT(iniciado, '%Y-%m-%d') BETWEEN " + str(request.data['inicio']) +" and " + str(request.data['fim']) + "")
                     data = (request.data['producao'],
                             request.data['inicio'],
                             request.data['fim']        
                     )
                 else:
                     query = ("SELECT * FROM lote_lote WHERE `num_lote` in (select `numero_tipo` from movimentacoes_movimentacoes where `tipo`=" + str(request.data['producao']) + ")") 
-                    print('to sem data')
-                    data = (request.data['producao'])
                     
-                cursor.execute(query)
-
-                row_headers=[x[0] for x in cursor.description]
-                records = cursor.fetchall()
-
-                json_data=[]
+                cursor.execute(query,data)
 
                 for rows in records:
                     json_data.append(dict(zip(row_headers,rows)))
