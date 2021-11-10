@@ -213,16 +213,18 @@ class toPay(viewsets.ViewSet):
             if connection.is_connected():
                 cursor = connection.cursor()
                 if request.data['inicio'] != '' and request.data['fim'] != '': 
-                    query = ("SELECT * FROM lote_lote WHERE num_lote in (select numero_tipo from recycledb.movimentacoes_movimentacoes where tipo= %s) AND DATE_FORMAT(data, '%Y-%m-%d') BETWEEN %s and %s") 
-                    data = (request.data['type'],
+                    print('to aqui')
+                    query = ("SELECT * FROM lote_lote WHERE num_lote in (select numero_tipo from recycledb.movimentacoes_movimentacoes where tipo=" + str(request.data['producao']) +") AND DATE_FORMAT(iniciado, '%Y-%m-%d') BETWEEN " + request.data['inicio'] +" and " + request.data['fim'] + "")
+                    data = (request.data['producao'],
                             request.data['inicio'],
                             request.data['fim']        
                     )
                 else:
-                    query = ("SELECT * FROM lote_lote WHERE num_lote in (select numero_tipo from recycledb.movimentacoes_movimentacoes where tipo= %s)") 
-                    data = (request.data['type'])
+                    query = ("SELECT * FROM lote_lote WHERE `num_lote` in (select `numero_tipo` from movimentacoes_movimentacoes where `tipo`=" + str(request.data['producao']) + ")") 
+                    print('to sem data')
+                    data = (request.data['producao'])
                     
-                cursor.execute(query,data)
+                cursor.execute(query)
 
                 row_headers=[x[0] for x in cursor.description]
                 records = cursor.fetchall()
