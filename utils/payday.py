@@ -237,3 +237,63 @@ class toPay(viewsets.ViewSet):
         except mysql.connector.Error as err:
             connection.close()
             return Response(f"Error: {err}", status=status.HTTP_400_BAD_REQUEST)
+
+
+    @action(detail=True, methods=['POST'])
+    def baglist (self, request):
+        try:
+            connection = mysql.connector.connect(user='root', password='',host='127.0.0.1',database='recycledb',port='3306')
+
+            if connection.is_connected():
+                cursor = connection.cursor()
+
+                query = ("SELECT `vendas_vendas`.`id`,                                                                                                      "+
+                        "`vendas_vendas`.`data`,                                                                                                            "+
+                        "`vendas_vendas`.`cliente_id`,                                                                                                      "+
+                        "`vendas_vendas`.`forma_de_pagamento_id`,                                                                                           "+
+                        "`vendas_vendas`.`vendedor_id`,                                                                                                     "+
+                        "`vendasitens_vendasitens`.`venda_id`,                                                                                              "+
+                        "`vendasitens_vendasitens`.`precificacao_id`,                                                                                       "+
+                        "`precificacao_precificacao`.`id`,                                                                                                  "+
+                        "`precificacao_precificacao`.`quantidade`,                                                                                          "+
+                        "`precificacao_precificacao`.`preco_compra`,                                                                                        "+
+                        "`precificacao_precificacao`.`preco_venda`,                                                                                         "+
+                        "`precificacao_precificacao`.`fornecedor_id`,                                                                                       "+
+                        "`precificacao_precificacao`.`produto_id`,                                                                                          "+
+                        "`precificacao_precificacao`.`qualidade_id`                                                                                         "+
+                        "FROM `vendas_vendas` JOIN `vendasitens_vendasitens` on vendas_vendas.id = vendasitens_vendasitens.venda_id                         "+
+                        "                    JOIN `precificacao_precificacao` on vendasitens_vendasitens.precificacao_id = precificacao_precificacao.id     "+
+                        "                        order by vendas_vendas.id;                                                                                 ")
+
+                cursor.execute(query)
+                row_headers=[x[0] for x in cursor.description]
+                records = cursor.fetchall()
+
+                json_data=[]
+                x = ""
+                itens = []
+                
+                for i in range (0, len(records)):
+                    if x == records[i][0] or x == "":
+                        x = records[i][0]
+                        itens.append({
+                            "id":records[i][6],
+                            "quantidade":records[i][7],
+                            "preco_compra":records[i][8],
+                            "preco_venda":records[i][9],
+                            "fornecedor_id":records[i][10],
+                            "produto_id":records[i][11],
+                            "qualidade_id":records[i][12],
+                        })
+                        i = i + 1
+                    else:
+                        json_data.append(dict(zip(row_headers,(records[i-1][0],records[i-1][1],records[i-1][2],records[i-1][3],records[i-1][4],records[i-1][5],itens))))
+                        json_data.append(dict(zip(row_headers,(records[i][0],records[i][1],records[i][2],records[i][3],records[i][4],records[i][5],records[i][6],records[i][7],records[i][8],records[i][9],records[i][10],records[i][11],records[i][12]))))
+                        x = ""
+                        itens = []
+                        
+                return Response(json_data)
+
+        except mysql.connector.Error as err:
+            connection.close()
+            return Response(f"Error: {err}", status=status.HTTP_400_BAD_REQUEST)
