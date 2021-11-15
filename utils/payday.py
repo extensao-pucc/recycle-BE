@@ -234,7 +234,7 @@ class toPay(viewsets.ViewSet):
             return Response(f"Error: {err}", status=status.HTTP_400_BAD_REQUEST)
 
 
-    @action(detail=True, methods=['POST'])
+    @action(detail=True, methods=['GET'])
     def baglist (self, request):
         try:
             connection = mysql.connector.connect(user='root', password='',host='127.0.0.1',database='recycledb',port='3306')
