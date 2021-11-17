@@ -9,7 +9,7 @@ from CRUDs.socios.serializers import SociosSerializer
 class VendasSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vendas
-        fields = ['id','cliente','data', 'forma_de_pagamento', 'vendedor']
+        fields = ['id','cliente','data', 'forma_de_pagamento', 'valor', 'vendedor']
         read_only_fields = ('created','updated')
 
     def to_representation(self, instance):
