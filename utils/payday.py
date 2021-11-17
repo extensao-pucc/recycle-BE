@@ -3,6 +3,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from financeiro.contas.models import Contas
 from mysql.connector import Error
+from django.db import transaction
 import mysql.connector
 
 from datetime import datetime
@@ -245,11 +246,12 @@ class toPay(viewsets.ViewSet):
                 query = ("SELECT `vendas_vendas`.`id`,                                                                                                                                                         "+
                         "`vendas_vendas`.`data`,                                                                                                                                                               "+
                         "`clientes_clientes`.`razao_social_nome` as `cliente`,                                                                                                                                 "+
-                        "`condicoesdepagamento_condicoesdepagamento`.`descricao`,                                                                                                                              "+
-                        "`socios_socios`.`nome` as `nome_socio`,                                                                                                                                               "+
+                        "`condicoesdepagamento_condicoesdepagamento`.`descricao` as `forma_de_pagamento`,                                                                                                      "+
+                        "`socios_socios`.`nome` as `vendedor`,                                                                                                                                               "+
                         "`vendasitens_vendasitens`.`venda_id`,                                                                                                                                                 "+
-                        "`precificacao_precificacao`.`id` as `precificacao` ,                                                                                                                                                     "+
-                        "`precificacao_precificacao`.`quantidade`,                                                                                                                                             "+
+                        "`vendas_vendas`.`valor`,                                                                                                                                                              "+
+                        "`precificacao_precificacao`.`id` as `itens`,                                                                                                                                   "+
+                        "`vendasitens_vendasitens`.`quantidade`,                                                                                                                                               "+
                         "`precificacao_precificacao`.`preco_compra`,                                                                                                                                           "+
                         "`precificacao_precificacao`.`preco_venda`,                                                                                                                                            "+
                         "`fornecedores_fornecedores`.`razao_social_nome` as `fornecedor`,                                                                                                                      "+
@@ -276,18 +278,28 @@ class toPay(viewsets.ViewSet):
                     if x == records[i][0] or x == "":
                         x = records[i][0]
                         itens.append({
-                            "id":records[i][6],
-                            "quantidade":records[i][7],
-                            "preco_compra":records[i][8],
-                            "preco_venda":records[i][9],
-                            "fornecedor_id":records[i][10],
-                            "produto_id":records[i][11],
-                            "qualidade_id":records[i][12],
+                            "id":records[i][7],
+                            "quantidade":records[i][8],
+                            "preco_compra":records[i][9],
+                            "preco_venda":records[i][10],
+                            "fornecedor":records[i][11],
+                            "produto":records[i][12],
+                            "qualidade":records[i][13],
                         })
                         i = i + 1
                     else:
-                        json_data.append(dict(zip(row_headers,(records[i-1][0],records[i-1][1],records[i-1][2],records[i-1][3],records[i-1][4],records[i-1][5],itens))))
-                        json_data.append(dict(zip(row_headers,(records[i][0],records[i][1],records[i][2],records[i][3],records[i][4],records[i][5],records[i][6],records[i][7],records[i][8],records[i][9],records[i][10],records[i][11],records[i][12]))))
+                        json_data.append(dict(zip(row_headers,(records[i-1][0],records[i-1][1],records[i-1][2],records[i-1][3],records[i-1][4],records[i-1][5],records[i-1][6],itens))))
+                        itens_novo = []
+                        itens_novo.append({
+                            "id":records[i][7],
+                            "quantidade":records[i][8],
+                            "preco_compra":records[i][9],
+                            "preco_venda":records[i][10],
+                            "fornecedor":records[i][11],
+                            "produto":records[i][12],
+                            "qualidade":records[i][13],
+                        })
+                        json_data.append(dict(zip(row_headers,(records[i][0],records[i][1],records[i][2],records[i][3],records[i][4],records[i][5],records[i][6],itens_novo))))
                         x = ""
                         itens = []
                         
@@ -301,40 +313,17 @@ class toPay(viewsets.ViewSet):
     def saveBaglist (self, request):
         try:
             connection = mysql.connector.connect(user='root', password='',host='127.0.0.1',database='recycledb',port='3306')
-
-            if connection.is_connected():
-                cursor = connection.cursor()
-
-                "query = INSERT INTO `recycledb`.`vendasitens_vendasitens`(`id`, `precificacao_id`, `venda_id`) VALUES (<{id: }>, <{precificacao_id: }>, <{venda_id: }>)"
+            cursor = connection.cursor()
+            
+            with transaction.atomic():
+                # --------------------    Insert na tabela de lote
+                query = ("INSERT INTO `recycledb`.`vendasitens_vendasitens`(`id`,`precificacao_id`,`venda_id`) VALUES (%s,%s,%s);")
+                data = (request.data['lote']['num_lote'],
+                        request.data['lote']['finalizado'],
+                        request.data['lote']['iniciado'],
+                )
+                cursor.execute(query,data)
                 
-                cursor.execute(query)
-                row_headers=[x[0] for x in cursor.description]
-                records = cursor.fetchall()
-
-                json_data=[]
-                x = ""
-                itens = []
-                
-                for i in range (0, len(records)):
-                    if x == records[i][0] or x == "":
-                        x = records[i][0]
-                        itens.append({
-                            "id":records[i][6],
-                            "quantidade":records[i][7],
-                            "preco_compra":records[i][8],
-                            "preco_venda":records[i][9],
-                            "fornecedor_id":records[i][10],
-                            "produto_id":records[i][11],
-                            "qualidade_id":records[i][12],
-                        })
-                        i = i + 1
-                    else:
-                        json_data.append(dict(zip(row_headers,(records[i-1][0],records[i-1][1],records[i-1][2],records[i-1][3],records[i-1][4],records[i-1][5],itens))))
-                        json_data.append(dict(zip(row_headers,(records[i][0],records[i][1],records[i][2],records[i][3],records[i][4],records[i][5],records[i][6],records[i][7],records[i][8],records[i][9],records[i][10],records[i][11],records[i][12]))))
-                        x = ""
-                        itens = []
-                        
-                return Response(json_data)
 
         except mysql.connector.Error as err:
             connection.close()
