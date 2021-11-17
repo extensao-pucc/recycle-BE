@@ -247,16 +247,17 @@ class toPay(viewsets.ViewSet):
                         "`vendas_vendas`.`data`,                                                                                                                                                               "+
                         "`clientes_clientes`.`razao_social_nome` as `cliente`,                                                                                                                                 "+
                         "`condicoesdepagamento_condicoesdepagamento`.`descricao` as `forma_de_pagamento`,                                                                                                      "+
-                        "`socios_socios`.`nome` as `vendedor`,                                                                                                                                               "+
+                        "`socios_socios`.`nome` as `vendedor`,                                                                                                                                                 "+
                         "`vendasitens_vendasitens`.`venda_id`,                                                                                                                                                 "+
                         "`vendas_vendas`.`valor`,                                                                                                                                                              "+
-                        "`precificacao_precificacao`.`id` as `itens`,                                                                                                                                   "+
-                        "`vendasitens_vendasitens`.`quantidade`,                                                                                                                                               "+
+                        "`precificacao_precificacao`.`id` as `itens`,                                                                                                                                          "+
+                        "`precificacao_precificacao`.`quantidade` as `quantidade_estoque`,                                                                                                                                             "+
                         "`precificacao_precificacao`.`preco_compra`,                                                                                                                                           "+
                         "`precificacao_precificacao`.`preco_venda`,                                                                                                                                            "+
                         "`fornecedores_fornecedores`.`razao_social_nome` as `fornecedor`,                                                                                                                      "+
                         "`produtos_produtos`.`descricao` as `produto`,                                                                                                                                         "+
-                        "`qualidades_qualidades`.`nome` as `qualidade`                                                                                                                                         "+
+                        "`qualidades_qualidades`.`nome` as `qualidade`,                                                                                                                                        "+
+                        "`vendasitens_vendasitens`.`quantidade` as `quantidade_da_venda`                                                                                                                                                "+
                         "FROM `vendas_vendas` JOIN `vendasitens_vendasitens` on vendas_vendas.id = vendasitens_vendasitens.venda_id                                                                            "+
                         "                        JOIN `precificacao_precificacao` on vendasitens_vendasitens.precificacao_id = precificacao_precificacao.id                                                    "+
                         "                            JOIN `clientes_clientes` on vendas_vendas.cliente_id = clientes_clientes.id                                                                               "+
@@ -279,12 +280,13 @@ class toPay(viewsets.ViewSet):
                         x = records[i][0]
                         itens.append({
                             "id":records[i][7],
-                            "quantidade":records[i][8],
+                            "quantidade_estoque":records[i][8],
                             "preco_compra":records[i][9],
                             "preco_venda":records[i][10],
                             "fornecedor":records[i][11],
                             "produto":records[i][12],
                             "qualidade":records[i][13],
+                            "quantidade_da_venda":records[i][14],
                         })
                         i = i + 1
                     else:
@@ -292,12 +294,13 @@ class toPay(viewsets.ViewSet):
                         itens_novo = []
                         itens_novo.append({
                             "id":records[i][7],
-                            "quantidade":records[i][8],
+                            "quantidade_estoque":records[i][8],
                             "preco_compra":records[i][9],
                             "preco_venda":records[i][10],
                             "fornecedor":records[i][11],
                             "produto":records[i][12],
                             "qualidade":records[i][13],
+                            "quantidade_da_venda":records[i][14],
                         })
                         json_data.append(dict(zip(row_headers,(records[i][0],records[i][1],records[i][2],records[i][3],records[i][4],records[i][5],records[i][6],itens_novo))))
                         x = ""
@@ -316,13 +319,13 @@ class toPay(viewsets.ViewSet):
             cursor = connection.cursor()
             
             with transaction.atomic():
-                # --------------------    Insert na tabela de lote
-                query = ("INSERT INTO `recycledb`.`vendasitens_vendasitens`(`id`,`precificacao_id`,`venda_id`) VALUES (%s,%s,%s);")
-                data = (request.data['lote']['num_lote'],
-                        request.data['lote']['finalizado'],
-                        request.data['lote']['iniciado'],
-                )
-                cursor.execute(query,data)
+                for item in request.data['precificacao']:
+                    query = ("INSERT INTO `recycledb`.`vendasitens_vendasitens`(`id`,`precificacao_id`,`venda_id`) VALUES (%s,%s,%s);")
+                    data = (request.data['id'],
+                            request.data['venda_id'],
+                            item,
+                    )
+                    cursor.execute(query,data)
                 
 
         except mysql.connector.Error as err:
