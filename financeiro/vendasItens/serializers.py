@@ -7,7 +7,7 @@ from CRUDs.precificacao.serializers import PrecificacaoSerializer
 class VendasItensSerializer(serializers.ModelSerializer):
     class Meta:
         model = VendasItens
-        fields = ['id','venda','precificacao']
+        fields = ['id','venda','precificacao', 'quantidade']
         read_only_fields = ('created','updated')
 
     def to_representation(self, instance):
