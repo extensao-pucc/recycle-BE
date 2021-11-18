@@ -319,27 +319,23 @@ class toPay(viewsets.ViewSet):
             cursor = connection.cursor()
             
             with transaction.atomic():
-                query = ("INSERT INTO `recycledb`.`vendas_vendas`(`id`,`data`,`cliente_id`,`forma_de_pagamento_id`,`vendedor_id`,`valor`) VALUES (%s,%s,%s,%s,%s,%s);")
-                data = (request.data['venda']['id'],
-                        request.data['venda']['data'],
-                        request.data['venda']['cliente_id'],
-                        request.data['venda']['forma_de_pagamento_id'],
-                        request.data['venda']['vendedor_id'],
-                        request.data['venda']['valor'],
-                )    
+                query = ("INSERT INTO `recycledb`.`vendas_vendas`(`data`,`cliente_id`,`forma_de_pagamento_id`,`vendedor_id`,`valor`) VALUES (%s,%s,%s,%s,%s);")
+                data = (request.data['data'],
+                        request.data['cliente'],
+                        request.data['forma_de_pagamento'],
+                        request.data['vendedor'],
+                        request.data['valor'],
+                )   
                 cursor.execute(query,data)
 
                 query = ("SELECT `vendas_vendas`.`id` FROM `vendas_vendas` ORDER BY `vendas_vendas`.`id` DESC LIMIT 1") 
                 cursor.execute(query)
                 records = cursor.fetchall()
-                id_venda = records[0]
+                id_venda = records[0][0]
 
-                for item in (request.data['itens']):
+                for i, item in enumerate(request.data['itens']):
                     query = ("INSERT INTO `recycledb`.`vendasitens_vendasitens` (`precificacao_id`, `venda_id`, `quantidade`) VALUES (%s,%s,%s);")
-                    data = (request.data[item]['id'],
-                        id_venda,
-                        request.data[item]['quantidade'],
-                    )    
+                    data = (request.data['itens'][i]['id'], id_venda, request.data['itens'][i]['quantidade_da_venda'])    
                     cursor.execute(query,data) 
 
 
