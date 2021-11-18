@@ -274,8 +274,10 @@ class toPay(viewsets.ViewSet):
                 json_data=[]
                 x = ""
                 itens = []
-                
-                for i in range (0, len(records)):
+                i = 0
+                print(len(records))
+                while i < len(records):
+                # for i in range (0, len(records)):
                     if x == records[i][0] or x == "":
                         x = records[i][0]
                         itens.append({
@@ -305,7 +307,7 @@ class toPay(viewsets.ViewSet):
                         json_data.append(dict(zip(row_headers,(records[i][0],records[i][1],records[i][2],records[i][3],records[i][4],records[i][5],records[i][6],itens_novo))))
                         x = ""
                         itens = []
-                        
+                              
                 return Response(json_data)
 
         except mysql.connector.Error as err:
@@ -319,7 +321,7 @@ class toPay(viewsets.ViewSet):
             cursor = connection.cursor()
             
             with transaction.atomic():
-                query = ("INSERT INTO `recycledb`.`vendas_vendas`(`data`,`cliente_id`,`forma_de_pagamento_id`,`vendedor_id`,`valor`) VALUES (%s,%s,%s,%s,%s);")
+                query = ("INSERT INTO `recycledb`.`vendas_vendas` (`data`,`cliente_id`,`forma_de_pagamento_id`,`vendedor_id`,`valor`) VALUES (%s,%s,%s,%s,%s);")
                 data = (request.data['data'],
                         request.data['cliente'],
                         request.data['forma_de_pagamento'],
