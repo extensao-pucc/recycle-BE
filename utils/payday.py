@@ -319,15 +319,33 @@ class toPay(viewsets.ViewSet):
             cursor = connection.cursor()
             
             with transaction.atomic():
-                for item in request.data['precificacao']:
-                    query = ("INSERT INTO `recycledb`.`vendasitens_vendasitens`(`id`,`precificacao_id`,`venda_id`) VALUES (%s,%s,%s);")
-                    data = (request.data['id'],
-                            request.data['venda_id'],
-                            item,
-                    )
-                    cursor.execute(query,data)
-                
+                query = ("INSERT INTO `recycledb`.`vendas_vendas`(`id`,`data`,`cliente_id`,`forma_de_pagamento_id`,`vendedor_id`,`valor`) VALUES (%s,%s,%s,%s,%s,%s);")
+                data = (request.data['venda']['id'],
+                        request.data['venda']['data'],
+                        request.data['venda']['cliente_id'],
+                        request.data['venda']['forma_de_pagamento_id'],
+                        request.data['venda']['vendedor_id'],
+                        request.data['venda']['valor'],
+                )    
+                cursor.execute(query,data)
 
+                query = ("SELECT `vendas_vendas`.`id` FROM `vendas_vendas` ORDER BY `vendas_vendas`.`id` DESC LIMIT 1") 
+                cursor.execute(query)
+                records = cursor.fetchall()
+                id_venda = records[0]
+
+                for item in (request.data['itens']):
+                    query = ("INSERT INTO `recycledb`.`vendasitens_vendasitens` (`precificacao_id`, `venda_id`, `quantidade`) VALUES (%s,%s,%s);")
+                    data = (request.data[item]['id'],
+                        id_venda,
+                        request.data[item]['quantidade'],
+                    )    
+                    cursor.execute(query,data) 
+
+
+                connection.commit()
+            connection.close()
+            return Response("Everything os OK", status=200)
         except mysql.connector.Error as err:
             connection.close()
             return Response(f"Error: {err}", status=status.HTTP_400_BAD_REQUEST)

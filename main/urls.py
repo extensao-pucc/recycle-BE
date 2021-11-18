@@ -73,7 +73,8 @@ urlpatterns = [
     path('valueToPay/', toPay.as_view({'post':'payValue'})),
     path('payTotalValueMonthly/', toPay.as_view({'get':'payTotalValueMonthly'})),
     path('receiveTotalValueMonthly/', toPay.as_view({'get':'receiveTotalValueMonthly'})),
-    path('baglist/', toPay.as_view({'get':'baglist'}))
+    path('baglist/', toPay.as_view({'get':'baglist'})),
+    path('saveBaglist/', toPay.as_view({'post':'saveBaglist'}))
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
