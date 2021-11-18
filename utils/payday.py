@@ -279,6 +279,7 @@ class toPay(viewsets.ViewSet):
                 while i < len(records):
                 # for i in range (0, len(records)):
                     if x == records[i][0] or x == "":
+                        print(f"if - {records[i][0]}")
                         x = records[i][0]
                         itens.append({
                             "id":records[i][7],
@@ -292,24 +293,13 @@ class toPay(viewsets.ViewSet):
                         })
                         i = i + 1
                     else:
+                        print(f"else - {records[i][0]}")
                         json_data.append(dict(zip(row_headers,(records[i-1][0],records[i-1][1],records[i-1][2],records[i-1][3],records[i-1][4],records[i-1][5],records[i-1][6],itens))))
-                        itens_novo = []
-                        itens_novo.append({
-                            "id":records[i][7],
-                            "quantidade_estoque":records[i][8],
-                            "preco_compra":records[i][9],
-                            "preco_venda":records[i][10],
-                            "fornecedor":records[i][11],
-                            "produto":records[i][12],
-                            "qualidade":records[i][13],
-                            "quantidade_da_venda":records[i][14],
-                        })
-                        json_data.append(dict(zip(row_headers,(records[i][0],records[i][1],records[i][2],records[i][3],records[i][4],records[i][5],records[i][6],itens_novo))))
                         x = ""
                         itens = []
-                              
+                if itens:
+                    json_data.append(dict(zip(row_headers,(records[i-1][0],records[i-1][1],records[i-1][2],records[i-1][3],records[i-1][4],records[i-1][5],records[i-1][6],itens))))                 
                 return Response(json_data)
-
         except mysql.connector.Error as err:
             connection.close()
             return Response(f"Error: {err}", status=status.HTTP_400_BAD_REQUEST)
